@@ -17,21 +17,19 @@
             touch-action: none;
         }
 
-        /* Жесткая сетка без скролла */
         #app {
             position: relative; width: 100vw; height: 100vh; height: 100dvh;
             display: flex; flex-direction: column; align-items: center;
         }
 
-        /* Фоны и эффекты */
         #bg-canvas, #fx-canvas {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;
         }
 
-        /* 1. Заголовок (0-12%) */
+        /* 1. Заголовок */
         #header {
-            position: absolute; top: 4vh; width: 100%; text-align: center; z-index: 10;
-            font-size: 8.5vw; font-weight: 700; color: #ff66b2; letter-spacing: 1px;
+            position: absolute; top: 3vh; width: 100%; text-align: center; z-index: 10;
+            font-size: 8vw; font-weight: 700; color: #ff66b2; letter-spacing: 1px;
             text-shadow: 0 0 5px #ff66b2, 0 0 15px #ff007f, 0 0 30px #ff007f;
             animation: pulse 2s infinite alternate;
         }
@@ -40,45 +38,45 @@
             to { text-shadow: 0 0 8px #ff99cc, 0 0 20px #ff3399, 0 0 40px #ff007f, 0 0 60px #ff007f; }
         }
 
-        /* 2. Сердце (12-25%) */
+        /* 2. Сердце */
         #heart-container {
-            position: absolute; top: 13vh; width: 100%; height: 12vh;
+            position: absolute; top: 11vh; width: 100%; height: 14vh;
             display: flex; justify-content: center; align-items: center; z-index: 10;
         }
 
-        /* 3. Текст (26-52%) */
+        /* 3. Текст */
         #message {
-            position: absolute; top: 27vh; width: 90%; text-align: center; z-index: 10;
-            font-size: 5.8vw; line-height: 1.15; color: #fff0f5;
+            position: absolute; top: 26vh; width: 92%; text-align: center; z-index: 10;
+            font-size: 5.5vw; line-height: 1.15; color: #fff0f5;
             text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 0 0 10px rgba(255,105,180,0.5);
         }
 
-        /* 4. Сцена с котами и букетом (52-85%) */
+        /* 4. Сцена */
         #scene {
-            position: absolute; top: 52vh; width: 100%; height: 33vh; z-index: 10;
+            position: absolute; top: 52vh; width: 100%; height: 35vh; z-index: 10;
             display: flex; justify-content: center; align-items: flex-end;
         }
         .sprite-container { position: relative; display: flex; justify-content: center; align-items: flex-end; }
-        #cat-left { width: 28vw; height: 28vw; margin-right: -2vw; z-index: 12; }
-        #bouquet { width: 45vw; height: 45vw; z-index: 13; margin-bottom: 2vh; }
-        #cat-right { width: 28vw; height: 28vw; margin-left: -2vw; z-index: 12; }
+        #cat-left { width: 32vw; height: 32vw; margin-right: -4vw; z-index: 12; }
+        #bouquet { width: 50vw; height: 50vw; z-index: 13; margin-bottom: 1vh; }
+        #cat-right { width: 32vw; height: 32vw; margin-left: -4vw; z-index: 12; }
 
-        /* 5. Лиса (85-100%) */
+        /* 5. Лиса */
         #fox-container {
-            position: absolute; bottom: 2vh; left: 0; width: 100%; height: 15vh; z-index: 15; pointer-events: none;
+            position: absolute; bottom: 2vh; left: 0; width: 100%; height: 18vh; z-index: 15; pointer-events: none;
         }
         #fox-canvas { position: absolute; bottom: 0; image-rendering: pixelated; }
 
-        /* 6. Консоль (правый нижний угол) */
+        /* 6. Консоль */
         #console {
             position: absolute; bottom: 2vh; right: 2vw; z-index: 20;
             background: rgba(0, 15, 0, 0.85); border: 2px solid #33ff33; border-radius: 4px;
-            padding: 4px 8px; font-family: 'VT323', monospace; font-size: 3.5vw; color: #33ff33;
+            padding: 4px 8px; font-family: 'VT323', monospace; font-size: 3.2vw; color: #33ff33;
             text-shadow: 0 0 4px #33ff33; opacity: 0; transition: opacity 1s ease-in;
             box-shadow: 0 0 10px rgba(51, 255, 51, 0.3) inset;
         }
         #console.visible { opacity: 1; }
-        #console-header { display: flex; justify-content: flex-end; margin-bottom: 2px; font-size: 3vw; color: #88ff88;}
+        #console-header { display: flex; justify-content: flex-end; margin-bottom: 2px; font-size: 2.8vw; color: #88ff88;}
 
         canvas { image-rendering: pixelated; image-rendering: crisp-edges; }
     </style>
@@ -112,44 +110,39 @@
 
     <div id="console">
         <div id="console-header">_口X</div>
-        Исключительно для дорогой<br>любимой Настеньки от друга.<br><br>crafted by Hoodlum.
+        Исключительно для дорого<br>любимой Настеньки от друга.<br><br>crafted by Hoodlum.
     </div>
 </div>
 
 <script>
 /**
- * СИСТЕМА РЕНДЕРИНГА ПИКСЕЛЬ-АРТА
- * Отрисовка по строковым картам с последующим апскейлом без сглаживания.
+ * СИСТЕМА РЕНДЕРИНГА ПИКСЕЛЬ-АРТА ВЫСОКОЙ ДЕТАЛИЗАЦИИ
  */
 const PALETTES = {
-    heart: { 'R': '#e60033', 'D': '#990022', 'W': '#ff99bb', '.': null },
+    heart: { 'R': '#ff1a55', 'D': '#b3003b', 'W': '#ffb3cc', 'H': '#ff6699', '.': null },
     catL: { 
-        'W': '#ffffff', 'K': '#1a1a1a', 'P': '#ffb6c1', 'E': '#000000', 'G': '#ffd700', '.': null 
+        'W': '#ffffff', 'K': '#1a1a1a', 'P': '#ffb6c1', 'E': '#000000', 'G': '#ffd700', 'S': '#e6e6e6', '.': null 
     },
     catR: { 
-        'B': '#d2b48c', 'S': '#8b5a2b', 'W': '#ffffff', 'P': '#ffb6c1', 'E': '#000000', 'R': '#dc143c', '.': null 
+        'B': '#e6b88a', 'S': '#b3774d', 'W': '#ffffff', 'P': '#ffb6c1', 'E': '#000000', 'R': '#ff3333', 'r': '#cc0000', '.': null 
     },
     bouquet: {
-        'G': '#228b22', 'g': '#32cd32', 'P': '#ff69b4', 'p': '#ff1493', 'Y': '#ffd700', 'y': '#ffa500', 
-        'B': '#1e90ff', 'b': '#0000cd', 'W': '#ffffff', 'R': '#dc143c', 'r': '#8b0000', '.': null
+        'G': '#1e7b34', 'g': '#32cd32', 'P': '#ff66b2', 'p': '#cc0066', 'Y': '#ffcc00', 'y': '#ff9900', 
+        'B': '#3399ff', 'b': '#0055cc', 'W': '#ffffff', 'R': '#ff1a1a', 'r': '#990000', '.': null
     },
     fox: {
-        'O': '#ff7f00', 'D': '#cc5500', 'W': '#ffffff', 'K': '#000000', '.': null
+        'O': '#ff7700', 'D': '#cc4400', 'W': '#ffffff', 'K': '#111111', '.': null
     }
 };
 
-// Функция отрисовки строковой карты на канвас
 function drawSprite(canvasId, map, paletteKey, scale) {
     const canvas = document.getElementById(canvasId);
     const ctx = canvas.getContext('2d');
     const h = map.length;
     const w = map[0].length;
     
-    // Внутренний размер (реальные пиксели)
     canvas.width = w;
     canvas.height = h;
-    
-    // Внешний размер (апскейл)
     canvas.style.width = `${w * scale}px`;
     canvas.style.height = `${h * scale}px`;
     
@@ -167,113 +160,210 @@ function drawSprite(canvasId, map, paletteKey, scale) {
     }
 }
 
-// --- КАРТЫ СПРАЙТОВ ---
+// --- КАРТЫ СПРАЙТОВ (ДЕТАЛИЗАЦИЯ 32x48+) ---
 
 const HEART_MAP = [
-    ".RR.RR.",
-    "RWWRRRR",
-    "RRRRRRR",
-    "RRRRRRR",
-    ".RRRRR.",
-    "..RRR..",
-    "...R..."
+    "..HHHH......HHHH..",
+    ".HWWRRHH..HHRRWWH.",
+    "HWRRRRRRHHRRRRRRWH",
+    "HRRRRRRRRRRRRRRRRH",
+    "HRRRRRRRRRRRRRRRRH",
+    ".HRRRRRRRRRRRRRRH.",
+    "..HRRRRRRRRRRRRH..",
+    "...HRRRRRRRRRRH...",
+    "....HRRRRRRRRH....",
+    ".....HRRRRRRH.....",
+    "......HRRRRH......",
+    ".......HRRH.......",
+    "........HH........"
 ];
 
-const CAT_LEFT_MAP = [ // Белый кот в жилете
-    "..W...W..",
-    ".WPW.WPW.",
-    ".WWWWWWW.",
-    ".WEWWEWW.",
-    ".WWWPWWW.",
-    "..WWWWW..",
-    ".KKKKKKK.",
-    ".KWKKKWK.",
-    ".KWKGKWK.",
-    ".KKKKKKK.",
-    ".WW...WW.",
-    ".WW...WW."
+// Белый кот (32x40) - детализированная морда, жилетка, пуговицы
+const CAT_LEFT_MAP = [
+    "....WW..........WW....",
+    "...WPWW........WWPW...",
+    "..WPPWWW......WWWPPW..",
+    "..WWWWWWWWWWWWWWWWWW..",
+    ".WWWWWWWWWWWWWWWWWWWW.",
+    ".WWWWWWWWWWWWWWWWWWWW.",
+    ".WWWWEWWWWWWWWWEWWWWW.",
+    ".WWWWEEWWWWWWWEEWWWWW.",
+    ".WWWWWEWWWWWWWWEWWWWW.",
+    ".WWWWWWWWWWWWWWWWWWWW.",
+    ".WWWWWWWWPPPPWWWWWWWW.",
+    ".WWWWWWWPPPPPPWWWWWWW.",
+    "..WWWWWWPPPPPPWWWWWW..",
+    "..WWWWWWWWWWWWWWWWWW..",
+    "...WWWWWWWWWWWWWWWW...",
+    "....WWWWWWWWWWWWWW....",
+    ".....KKKKKKKKKKKK.....",
+    "....KKKKKKKKKKKKKK....",
+    "...KKKKKKKKKKKKKKKK...",
+    "...KKKKKKKGGKKKKKKK...",
+    "...KKKKKKKGGKKKKKKK...",
+    "...KKKKKKKGGKKKKKKK...",
+    "...KKKKKKKKKKKKKKKK...",
+    "....KKKKKKKKKKKKKK....",
+    ".....KKKKKKKKKKKK.....",
+    "......WWWWWWWWWW......",
+    "......WWWWWWWWWW......",
+    "......WW....WWWW......",
+    "......WW....WWWW......",
+    ".....WWW....WWWW......",
+    ".....WWW....WWWW......",
+    "....SSSS....SSSS......",
+    "....SSSS....SSSS......"
 ];
 
-const CAT_RIGHT_MAP = [ // Рыжий кот с бантом
-    "..B...B..",
-    ".BPB.BPB.",
-    ".BBBBBBB.",
-    ".BEBBEBB.",
-    ".BBBPBBB.",
-    "..BBBBB..",
-    ".RR...RR.",
-    ".BRRRRRB.",
-    ".BBBBBBB.",
-    ".BSBBSBS.",
-    ".BB...BB.",
-    ".BB...BB."
+// Рыжий кот (32x40) - полоски, бантик, большие глаза
+const CAT_RIGHT_MAP = [
+    "....BB..........BB....",
+    "...BPBB........BBPB...",
+    "..BPPBBB......BBBPPB..",
+    "..BBBBBBBBBBBBBBBBBB..",
+    ".BBBBBBBBBBBBBBBBBBBB.",
+    ".BBSSBBBBBBBBBBSSBBBB.",
+    ".BBBBEWBBBBBBBWEBBBBB.",
+    ".BBBEEEBBBBBBBEEEBBBB.",
+    ".BBBBEWBBBBBBBWEBBBBB.",
+    ".BBBBBBBBBBBBBBBBBBBB.",
+    ".BBBBBBBBPPPPBBBBBBBB.",
+    ".BBBBBBBPPPPPPBBBBBBB.",
+    "..BBBBBBPPPPPPBBBBBB..",
+    "..BBBBBBBBBBBBBBBBBB..",
+    "...BBBBBBBBBBBBBBBB...",
+    "....BBBBBBBBBBBBBB....",
+    ".....RRRRRRRRRRRR.....",
+    "....RRrRRRRRRRRrRR....",
+    "...RRrrRRRRRRRRrrRR...",
+    "...RRrrRRRrrRRRrrRR...",
+    "...RRrrRRRrrRRRrrRR...",
+    "...RRrrRRRRRRRRrrRR...",
+    "....RRrRRRRRRRRrRR....",
+    ".....RRRRRRRRRRRR.....",
+    "......BBBBBBBBBB......",
+    "......BBBBBBBBBB......",
+    "......BBBB....BB......",
+    "......BBBB....BB......",
+    "......BBBB....BBB.....",
+    "......BBBB....BBB.....",
+    ".....BBBBB....BBBB....",
+    ".....BBBBB....BBBB....",
+    "....SSSSSS....SSSS...."
 ];
 
-const BOUQUET_MAP = [ // Букет
-    "...g.g.g...",
-    "..gPgYgBg..",
-    ".gPpYYBbpG.",
-    "gPYBppYPBg.",
-    ".gBpYYpBg..",
-    "..gGgGgG...",
-    "...GGGG....",
-    "..RRRRRR...",
-    ".RrRRRRrR..",
-    "..RR..RR...",
-    "..R....R..."
+// Букет (48x56) - много цветов, листья, бант
+const BOUQUET_MAP = [
+    "........................g.g.........................",
+    "......................g...g.........................",
+    "....................g.PPP.g.........................",
+    "...................gPpppPpg...gYYYg.................",
+    "..................gPpppppPg.gYyyyYg.................",
+    "........gBBBg.....gPpppPpg.gYyyyYg.....gPPPg........",
+    ".......gBbbbBg....g.PPP.g...gYYYg.....gPpppPg.......",
+    "......gBbbbbbBg..............g.g.....gPppppPg.......",
+    "......gBbbbbbBg....gYYYg............gPppppPg........",
+    ".......gBbbbBg....gYyyyYg...gBBBg....gPpppPg........",
+    "........gBBBg....gYyyyYg...gBbbbBg....gPPPg.........",
+    ".........g.g.....g.YYYg...gBbbbbbBg......g..........",
+    "..................g.g....gBbbbbbBg..................",
+    ".........................gBbbbBg....................",
+    "..........................gBBBg.....................",
+    "...........................g.g......................",
+    "..................gGGGGGGGGGGGGg....................",
+    ".................gGGGGGGGGGGGGGGg...................",
+    "................gGGGGGGGGGGGGGGGGg..................",
+    "...............gGGGGGGGGGGGGGGGGGGg.................",
+    "................gGGGGGGGGGGGGGGGGg..................",
+    ".................gGGGGGGGGGGGGGGg...................",
+    "..................gGGGGGGGGGGGGg....................",
+    "...................gGGGGGGGGGGg.....................",
+    "....................gGGGGGGGGg......................",
+    ".....................gGGGGGGg.......................",
+    "......................gGGGGg........................",
+    ".......................gGGg.........................",
+    "........................gg..........................",
+    "......................RRRRRR........................",
+    ".....................RRrrrrRR.......................",
+    "....................RRrrrrrrRR......................",
+    "...................RRrrRRRRrrRR.....................",
+    "..................RRrrRR..RRrrRR....................",
+    ".................RRrrRR....RRrrRR...................",
+    "................RRrrRR......RRrrRR..................",
+    "...............RRrrRR........RRrrRR.................",
+    "..............RRrrRR..........RRrrRR................",
+    ".............RRrrRR............RRrrRR...............",
+    "............RRrrRR..............RRrrRR..............",
+    "...........RRrrRR................RRrrRR.............",
+    "..........RRrrRR..................RRrrRR............"
 ];
 
-// Лиса: 4 кадра анимации (бег) + 1 кадр (сидит и машет)
+// Лиса (32x24) - высокая детализация для анимации
 const FOX_RUN_1 = [
-    "..OO......",
-    ".OWWO.....",
-    ".OWKOO....",
-    "..OOOOO...",
-    "...DOOOD..",
-    "..O..O.DW.",
-    ".O....O...",
-    "K......K.."
+    "........OO..................",
+    ".......OWWO.................",
+    ".......OWKOO................",
+    "........OOOOOO..............",
+    ".........DOOOOOD............",
+    "..........DOOOOODWW.........",
+    "...........DOOOOODWW........",
+    "............OOOOOO..........",
+    "...........OO....OO.........",
+    "..........OO......OO........",
+    ".........OO........OO.......",
+    "........KK..........KK......"
 ];
 const FOX_RUN_2 = [
-    "..OO......",
-    ".OWWO.....",
-    ".OWKOO....",
-    "..OOOOO...",
-    "...DOOOD..",
-    "...O.O.DW.",
-    "..O...O...",
-    "..K...K..."
+    "........OO..................",
+    ".......OWWO.................",
+    ".......OWKOO................",
+    "........OOOOOO..............",
+    ".........DOOOOOD............",
+    "..........DOOOOODWW.........",
+    "...........DOOOOODWW........",
+    "............OOOOOO..........",
+    "............OO..OO..........",
+    "...........OO....OO.........",
+    "..........OO......OO........",
+    ".........KK........KK......."
 ];
 const FOX_SIT_WAVE_1 = [
-    "..OO......",
-    ".OWWO.....",
-    ".OWKOO....",
-    "..OOOOO...",
-    "..DOOOD...",
-    ".O..OODW..",
-    ".O..OO....",
-    "KK..KK...."
+    "........OO..................",
+    ".......OWWO.................",
+    ".......OWKOO................",
+    "........OOOOOO..............",
+    ".........DOOOOOD............",
+    "..........DOOOOODWW.........",
+    "...........DOOOOODWW........",
+    "............OOOOOO..........",
+    "...........OO.OOOO..........",
+    "..........OO..OOOO..........",
+    ".........OO...OOOO..........",
+    "........KK....KKKK.........."
 ];
 const FOX_SIT_WAVE_2 = [
-    "..OO......",
-    ".OWWO.....",
-    ".OWKOO....",
-    "O.OOOOO...",
-    "..DOOOD...",
-    "...OOODW..",
-    "..OOO.....",
-    "..KKK....."
+    "........OO..................",
+    ".......OWWO.................",
+    ".......OWKOO................",
+    "........OOOOOO..............",
+    ".........DOOOOOD............",
+    "..........DOOOOODWW.........",
+    "...........DOOOOODWW........",
+    "............OOOOOO..........",
+    "..........OOO.OOO...........",
+    ".........OOO..OOO...........",
+    "........OOO...OOO...........",
+    ".......KKK....KKK..........."
 ];
 
-// Инициализация статичных спрайтов
 function initSprites() {
-    // Масштаб подбираем динамически, но для базы берем примерный
-    const baseScale = Math.max(window.innerWidth / 100, 3); 
+    // Динамический масштаб на основе ширины экрана для четкости
+    const baseScale = Math.max(window.innerWidth / 120, 2.5); 
     
-    drawSprite('heart-canvas', HEART_MAP, 'heart', baseScale * 1.5);
-    drawSprite('cat-l-canvas', CAT_LEFT_MAP, 'catL', baseScale * 1.2);
-    drawSprite('cat-r-canvas', CAT_RIGHT_MAP, 'catR', baseScale * 1.2);
-    drawSprite('bouquet-canvas', BOUQUET_MAP, 'bouquet', baseScale * 1.8);
+    drawSprite('heart-canvas', HEART_MAP, 'heart', baseScale * 1.2);
+    drawSprite('cat-l-canvas', CAT_LEFT_MAP, 'catL', baseScale * 0.9);
+    drawSprite('cat-r-canvas', CAT_RIGHT_MAP, 'catR', baseScale * 0.9);
+    drawSprite('bouquet-canvas', BOUQUET_MAP, 'bouquet', baseScale * 0.8);
 }
 
 /**
@@ -287,25 +377,23 @@ function initBg() {
     bgCanvas.width = window.innerWidth;
     bgCanvas.height = window.innerHeight;
     stars = [];
-    for(let i=0; i<100; i++) {
+    for(let i=0; i<150; i++) {
         stars.push({
             x: Math.random() * bgCanvas.width,
             y: Math.random() * bgCanvas.height,
-            s: Math.random() * 2,
+            s: Math.random() * 2 + 1,
             a: Math.random()
         });
     }
 }
 
 function drawBg() {
-    // Градиентный фон
     let grad = bgCtx.createLinearGradient(0, 0, 0, bgCanvas.height);
     grad.addColorStop(0, "#05051a");
     grad.addColorStop(1, "#1a0b2e");
     bgCtx.fillStyle = grad;
     bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
 
-    // Звезды
     bgCtx.fillStyle = "white";
     stars.forEach(star => {
         bgCtx.globalAlpha = star.a;
@@ -318,7 +406,7 @@ function drawBg() {
 }
 
 /**
- * ФЕЙЕРВЕРКИ (Система частиц)
+ * ФЕЙЕРВЕРКИ
  */
 const fxCanvas = document.getElementById('fx-canvas');
 const fxCtx = fxCanvas.getContext('2d');
@@ -333,18 +421,20 @@ class Particle {
     constructor(x, y, color) {
         this.x = x; this.y = y;
         const angle = Math.random() * Math.PI * 2;
-        const speed = Math.random() * 4 + 1;
+        const speed = Math.random() * 5 + 2;
         this.vx = Math.cos(angle) * speed;
         this.vy = Math.sin(angle) * speed;
         this.color = color;
         this.life = 1.0;
-        this.decay = Math.random() * 0.02 + 0.01;
-        this.size = Math.random() * 3 + 2; // Квадратные пиксельные искры
+        this.decay = Math.random() * 0.015 + 0.01;
+        this.size = Math.random() * 3 + 2;
     }
     update() {
         this.x += this.vx;
         this.y += this.vy;
-        this.vy += 0.05; // Гравитация
+        this.vy += 0.08; // Гравитация
+        this.vx *= 0.98; // Сопротивление воздуха
+        this.vy *= 0.98;
         this.life -= this.decay;
     }
     draw(ctx) {
@@ -356,17 +446,17 @@ class Particle {
 
 function spawnFirework() {
     const x = Math.random() * fxCanvas.width;
-    const y = Math.random() * (fxCanvas.height * 0.5);
-    const colors = ['#ff007f', '#00ffff', '#ffd700', '#33ff33', '#ff7f00'];
+    const y = Math.random() * (fxCanvas.height * 0.4) + 50;
+    const colors = ['#ff007f', '#00ffff', '#ffd700', '#33ff33', '#ff7f00', '#ff3333'];
     const color = colors[Math.floor(Math.random() * colors.length)];
-    for(let i=0; i<40; i++) {
+    for(let i=0; i<60; i++) {
         particles.push(new Particle(x, y, color));
     }
 }
 
 function updateFx() {
     fxCtx.clearRect(0, 0, fxCanvas.width, fxCanvas.height);
-    if(Math.random() < 0.08) spawnFirework(); // Частота запуска
+    if(Math.random() < 0.12) spawnFirework(); 
     
     for(let i = particles.length - 1; i >= 0; i--) {
         particles[i].update();
@@ -381,20 +471,18 @@ function updateFx() {
  */
 const foxCanvas = document.getElementById('fox-canvas');
 const foxCtx = foxCanvas.getContext('2d');
-const foxContainer = document.getElementById('fox-container');
 
 let foxState = {
-    mode: 'wait', // wait, run, sit
+    mode: 'wait',
     x: window.innerWidth + 100,
     startTime: Date.now(),
     frame: 0,
     lastFrameTime: 0,
-    scale: Math.max(window.innerWidth / 100, 3) * 1.5
+    scale: Math.max(window.innerWidth / 120, 2.5) * 1.2
 };
 
-// Настройка канваса лисы
-foxCanvas.width = 10; // ширина матрицы
-foxCanvas.height = 8; // высота матрицы
+foxCanvas.width = 28; 
+foxCanvas.height = 12; 
 foxCtx.imageSmoothingEnabled = false;
 
 function drawFoxMatrix(matrix) {
@@ -415,43 +503,35 @@ function updateFox() {
     const now = Date.now();
     const elapsed = (now - foxState.startTime) / 1000;
     
-    // Ждем 5 секунд перед стартом
     if (foxState.mode === 'wait') {
         if (elapsed > 5) {
             foxState.mode = 'run';
             foxState.x = window.innerWidth + 50;
         } else {
-            return; // Не рисуем
+            return;
         }
     }
 
-    // Применяем масштаб и позицию
     foxCanvas.style.width = `${foxCanvas.width * foxState.scale}px`;
     foxCanvas.style.height = `${foxCanvas.height * foxState.scale}px`;
     foxCanvas.style.left = `${foxState.x}px`;
 
     if (foxState.mode === 'run') {
-        // Движение влево
-        foxState.x -= 4; 
+        foxState.x -= 5; 
         
-        // Анимация кадров бега (каждые 100мс)
-        if (now - foxState.lastFrameTime > 100) {
+        if (now - foxState.lastFrameTime > 80) {
             foxState.frame = (foxState.frame + 1) % 2;
             foxState.lastFrameTime = now;
         }
         drawFoxMatrix(foxState.frame === 0 ? FOX_RUN_1 : FOX_RUN_2);
 
-        // Остановка примерно на 30% экрана
         if (foxState.x < window.innerWidth * 0.25) {
             foxState.mode = 'sit';
             foxState.frame = 0;
-            
-            // Показываем консоль в момент остановки/пробега
             document.getElementById('console').classList.add('visible');
         }
     } else if (foxState.mode === 'sit') {
-        // Анимация махания лапкой (каждые 300мс)
-        if (now - foxState.lastFrameTime > 300) {
+        if (now - foxState.lastFrameTime > 250) {
             foxState.frame = (foxState.frame + 1) % 2;
             foxState.lastFrameTime = now;
         }
@@ -469,15 +549,13 @@ function loop() {
     requestAnimationFrame(loop);
 }
 
-// Обработка ресайза
 window.addEventListener('resize', () => {
     initBg();
     initFx();
     initSprites();
-    foxState.scale = Math.max(window.innerWidth / 100, 3) * 1.5;
+    foxState.scale = Math.max(window.innerWidth / 120, 2.5) * 1.2;
 });
 
-// Запуск
 initBg();
 initFx();
 initSprites();
