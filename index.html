@@ -6,85 +6,86 @@
     <title>С Днём Рождения, Настя!</title>
     <style>
         body {
-            background-color: #111;
+            background-color: #0b0b12;
             color: #fff;
             font-family: 'Courier New', Courier, monospace;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 30px 20px;
             margin: 0;
+            min-height: 100vh;
             overflow-x: hidden;
+            box-sizing: border-box;
         }
 
         h1 {
-            color: #ff3366;
+            color: #ff2a6d;
             text-align: center;
-            font-size: 2.5rem;
-            text-shadow: 3px 3px 0px #333;
+            font-size: 3rem;
+            text-shadow: 0 0 10px rgba(255, 42, 109, 0.5), 3px 3px 0px #1a1a2e;
             margin-bottom: 5px;
+            z-index: 10;
         }
 
         .subtitle {
-            color: #ffcc00;
-            font-size: 1.2rem;
-            margin-bottom: 30px;
+            color: #05d9e8;
+            font-size: 1.4rem;
+            margin-bottom: 40px;
             text-align: center;
+            text-shadow: 0 0 8px rgba(5, 217, 232, 0.4);
+            z-index: 10;
         }
 
-        /* Общие настройки для пиксельной графики */
         .pixel-art {
             display: grid;
-            gap: 2px;
+            gap: 0px; 
             margin: 20px auto;
-            background-color: #222;
-            padding: 10px;
-            border: 4px solid #444;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            background-color: rgba(20, 20, 35, 0.8);
+            padding: 15px;
+            border: 4px solid #05d9e8;
+            box-shadow: 0 0 20px rgba(5, 217, 232, 0.3), inset 0 0 15px rgba(0,0,0,0.6);
+            z-index: 10;
         }
 
+        /* Маленький размер пикселей для высокого разрешения */
         .pixel {
-            width: 15px;
-            height: 15px;
+            width: 8px;
+            height: 8px;
             background-color: transparent;
         }
 
-        /* 1. Сетка СЕРДЦА (11x9) */
-        .heart-grid {
-            grid-template-columns: repeat(11, 15px);
+        /* Сетка 24x24 для высокой плотности картинки */
+        .high-res-grid {
+            grid-template-columns: repeat(24, 8px);
         }
 
-        /* 2. Сетка БУКЕТА ЦВЕТОВ (11x11) */
-        .bouquet-grid {
-            grid-template-columns: repeat(11, 15px);
-        }
+        /* Цвета сердца (с объемом) */
+        .r1 { background-color: #ff0055; } /* Базовый красный */
+        .r2 { background-color: #ff6699; } /* Блик сверху */
+        .r3 { background-color: #cc0044; } /* Тень */
+        
+        /* Цвета букета */
+        .p1 { background-color: #e0115f; } .p2 { background-color: #ff66cc; } 
+        .y1 { background-color: #ffcc00; } .y2 { background-color: #ffee77; } 
+        .b1 { background-color: #00a8ff; } .b2 { background-color: #66ccff; } 
+        .or { background-color: #ff6600; } 
+        
+        /* Зелень */
+        .g1 { background-color: #39ff14; } 
+        .g2 { background-color: #00cc44; } 
+        .g3 { background-color: #00882d; } 
 
-        /* Цвета пикселей */
-        .r { background-color: #ff0044; } /* Красный */
-        .dr { background-color: #b30030; } /* Темно-красный для объема */
-        .g { background-color: #00cc44; } /* Зеленый (стебли) */
-        .dg { background-color: #00882d; } /* Темно-зеленый */
-        .y { background-color: #ffcc00; } /* Желтый */
-        .p { background-color: #ff00ff; } /* Розовый/Фиолетовый */
-        .b { background-color: #00ccff; } /* Голубой */
-        .or { background-color: #ff6600; } /* Оранжевый */
-
-        /* Анимация фейерверка на фоне */
-        .fw {
+        /* Частицы салюта */
+        .firework-particle {
             position: fixed;
             width: 6px;
             height: 6px;
             border-radius: 50%;
             pointer-events: none;
-            animation: explode 2s infinite ease-out;
-            opacity: 0;
-        }
-
-        @keyframes explode {
-            0% { transform: translate(0, 100vh) scale(1); opacity: 1; }
-            50% { opacity: 1; }
-            100% { transform: translate(var(--mx), var(--my)) scale(0); opacity: 0; }
+            z-index: 1;
+            box-shadow: 0 0 12px currentColor;
         }
     </style>
 </head>
@@ -93,58 +94,137 @@
     <h1>С ДНЁМ РОЖДЕНИЯ, НАСТЯ! 🎉</h1>
     <div class="subtitle">Ты супер! Пусть этот день будет самым ярким! ✨</div>
 
-    <!-- БОЛЬШОЕ КРАСНОЕ СЕРДЦЕ ИЗ КВАДРАТОВ -->
-    <div class="pixel-art heart-grid">
-        <!-- Строка 1 -->
-        <div class="pixel"></div><div class="pixel r"></div><div class="pixel r"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel r"></div><div class="pixel r"></div><div class="pixel"></div>
-        <!-- Строка 2 -->
-        <div class="pixel r"></div><div class="pixel r"></div><div class="pixel r"></div><div class="pixel r"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel r"></div><div class="pixel r"></div><div class="pixel r"></div><div class="pixel r"></div>
-        <!-- Строка 3 -->
-        <div class="pixel r"></div><div class="pixel dr"></div><div class="pixel r"></div><div class="pixel r"></div><div class="pixel r"></div><div class="pixel"></div><div class="pixel r"></div><div class="pixel r"></div><div class="pixel r"></div><div class="pixel dr"></div><div class="pixel r"></div>
-        <!-- Строка 4 -->
-        <div class="pixel r"></div><div class="pixel dr"></div><div class="pixel dr"></div><div class="pixel r"></div><div class="pixel r"></div><div class="pixel r"></div><div class="pixel r"></div><div class="pixel r"></div><div class="pixel dr"></div><div class="pixel dr"></div><div class="pixel r"></div>
-        <!-- Строка 5 -->
-        <div class="pixel"></div><div class="pixel r"></div><div class="pixel dr"></div><div class="pixel dr"></div><div class="pixel r"></div><div class="pixel r"></div><div class="pixel r"></div><div class="pixel dr"></div><div class="pixel dr"></div><div class="pixel r"></div><div class="pixel"></div>
-        <!-- Строка 6 -->
-        <div class="pixel"></div><div class="pixel"></div><div class="pixel r"></div><div class="pixel dr"></div><div class="pixel dr"></div><div class="pixel r"></div><div class="pixel dr"></div><div class="pixel dr"></div><div class="pixel r"></div><div class="pixel"></div><div class="pixel"></div>
-        <!-- Строка 7 -->
-        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel r"></div><div class="pixel dr"></div><div class="pixel dr"></div><div class="pixel dr"></div><div class="pixel r"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
-        <!-- Строка 8 -->
-        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel r"></div><div class="pixel dr"></div><div class="pixel r"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
-        <!-- Строка 9 -->
-        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel r"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+    <!-- ВЫСОКОЕ РАЗРЕШЕНИЕ: СЕРДЦЕ -->
+    <div class="pixel-art high-res-grid">
+        <script>
+            const heartData = [,
+ ,
+ ,
+ ,
+ ,
+ ,
+ ,
+ ,
+ ,
+ ,
+ ,
+ ,
+ ,
+ ,
+ ,
+ ,
+ ,
+ ,
+ ,
+ ,
+ ,
+                [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+            ];
+
+            heartData.forEach(row => {
+                row.forEach(pixel => {
+                    if(pixel === 0) document.write('<div class="pixel"></div>');
+                    else if(pixel === 2) document.write('<div class="pixel r1"></div>');
+                    else if(pixel === 3) document.write('<div class="pixel r3"></div>');
+                });
+            });
+        </script>
     </div>
 
-    <!-- ИМПРОВИЗИРОВАННЫЙ БУКЕТ ЦВЕТОВ -->
-    <div class="pixel-art bouquet-grid">
-        <!-- Бутоны цветов сверху -->
-        <div class="pixel"></div><div class="pixel p"></div><div class="pixel p"></div><div class="pixel"></div><div class="pixel y"></div><div class="pixel y"></div><div class="pixel"></div><div class="pixel b"></div><div class="pixel b"></div><div class="pixel"></div><div class="pixel"></div>
-        <div class="pixel p"></div><div class="pixel or"></div><div class="pixel p"></div><div class="pixel"></div><div class="pixel y"></div><div class="pixel or"></div><div class="pixel y"></div><div class="pixel"></div><div class="pixel b"></div><div class="pixel or"></div><div class="pixel b"></div>
-        <div class="pixel"></div><div class="pixel p"></div><div class="pixel p"></div><div class="pixel"></div><div class="pixel y"></div><div class="pixel y"></div><div class="pixel"></div><div class="pixel b"></div><div class="pixel b"></div><div class="pixel"></div><div class="pixel"></div>
-        <!-- Стебли и листья -->
-        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel g"></div><div class="pixel"></div><div class="pixel g"></div><div class="pixel"></div><div class="pixel g"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
-        <div class="pixel"></div><div class="pixel"></div><div class="pixel g"></div><div class="pixel g"></div><div class="pixel dg"></div><div class="pixel g"></div><div class="pixel dg"></div><div class="pixel g"></div><div class="pixel g"></div><div class="pixel"></div><div class="pixel"></div>
-        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel dg"></div><div class="pixel g"></div><div class="pixel g"></div><div class="pixel g"></div><div class="pixel dg"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
-        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel dg"></div><div class="pixel g"></div><div class="pixel dg"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
-        <!-- Обвязка букета (бантик) -->
-        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel r"></div><div class="pixel r"></div><div class="pixel or"></div><div class="pixel r"></div><div class="pixel r"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
-        <!-- Ножка букета -->
-        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel dg"></div><div class="pixel g"></div><div class="pixel dg"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
-        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel dg"></div><div class="pixel"></div><div class="pixel dg"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
-        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel dg"></div><div class="pixel"></div><div class="pixel dg"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+    <!-- ВЫСОКОЕ РАЗРЕШЕНИЕ: БУКЕТ -->
+    <div class="pixel-art high-res-grid">
+        <script>
+            const bouquetData = [,
+ ,
+ ,
+ ,
+ ,
+ ,
+ ,
+ ,
+ ,
+ ,
+ ,
+ ,
+ ,
+ ,
+ ,
+ ,
+ ,
+ ,
+ ,
+                [0,0,0,0,0,10,10,0,0,0,0,10,10,0,0,0,0,0,0,0,0,0]
+            ];
+
+            bouquetData.forEach(row => {
+                row.forEach(pixel => {
+                    if(pixel === 0) document.write('<div class="pixel"></div>');
+                    else if(pixel === 1) document.write('<div class="pixel p1"></div>');
+                    else if(pixel === 2) document.write('<div class="pixel p2"></div>');
+                    else if(pixel === 3) document.write('<div class="pixel y1"></div>');
+                    else if(pixel === 4) document.write('<div class="pixel y2"></div>');
+                    else if(pixel === 5) document.write('<div class="pixel b1"></div>');
+                    else if(pixel === 6) document.write('<div class="pixel b2"></div>');
+                    else if(pixel === 7) document.write('<div class="pixel or"></div>');
+                    else if(pixel === 8) document.write('<div class="pixel g1"></div>');
+                    else if(pixel === 9) document.write('<div class="pixel g2"></div>');
+                    else if(pixel === 10) document.write('<div class="pixel g3"></div>');
+                });
+            });
+        </script>
     </div>
 
-    <!-- СКРИПТ ДЛЯ ГЕНЕРАЦИИ БЕСКОНЕЧНОГО ФЕЙЕРВЕРКА -->
+    <!-- СКРИПТ САЛЮТА -->
     <script>
-        const colors = ['#ff0055', '#00ffcc', '#ffcc00', '#ff00ff', '#00ff00', '#ffff00'];
+        const palette = ['#ff0055', '#00ffcc', '#ffcc00', '#ff00ff', '#39ff14', '#00ffff', '#ff5500'];
         
-        function createFirework() {
-            for (let i = 0; i < 30; i++) {
-                const fw = document.createElement('div');
-                fw.classList.add('fw');
+        function launchFirework() {
+            const targetX = Math.random() * window.innerWidth;
+            const targetY = Math.random() * (window.innerHeight * 0.5) + (window.innerHeight * 0.1);
+            const color = palette[Math.floor(Math.random() * palette.length)];
+            const partCount = 45;
+            
+            for (let i = 0; i < partCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('firework-particle');
+                particle.style.color = color;
+                particle.style.backgroundColor = color;
                 
-                // Случайная начальная точка внизу экрана
-                const startX = Math.random() * 100;
-                fw.style.left = startX + 'vw';
-                fw.style.bottom = '0px';
-                fw.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.left = targetX + 'px';
+                particle.style.top = targetY + 'px';
+                
+                document.body.appendChild(particle);
+                
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 6 + 3;
+                let vx = Math.cos(angle) * speed;
+                let vy = Math.sin(angle) * speed;
+                let posX = targetX;
+                let posY = targetY;
+                let opacity = 1;
+                
+                const interval = setInterval(() => {
+                    vx *= 0.97;
+                    vy += 0.18;
+                    posX += vx;
+                    posY += vy;
+                    opacity -= 0.02;
+                    
+                    particle.style.left = posX + 'px';
+                    particle.style.top = posY + 'px';
+                    particle.style.opacity = opacity;
+                    
+                    if (opacity <= 0) {
+                        clearInterval(interval);
+                        particle.remove();
+                    }
+                }, 16);
+            }
+        }
+        
+        setInterval(launchFirework, 500);
+        launchFirework();
+        setTimeout(launchFirework, 250);
+    </script>
+</body>
+</html>
