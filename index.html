@@ -18,6 +18,12 @@
   canvas{image-rendering:crisp-edges;image-rendering:pixelated;display:block}
   #bg,#fx{position:fixed;inset:0;z-index:0;pointer-events:none}
 
+  #miss{
+    position:fixed;top:0;left:0;right:0;z-index:99;display:none;
+    background:#3a0000;color:#ff6b6b;font-family:'VT323',monospace;
+    font-size:14px;padding:6px 10px;text-align:center;
+  }
+
   #header{
     position:absolute;top:1.6vh;width:100%;text-align:center;z-index:10;
     font-weight:700;font-size:clamp(18px,min(7.5vw,5vh),44px);color:#ff51a9;letter-spacing:.02em;
@@ -28,25 +34,25 @@
     50%{text-shadow:0 0 10px #ff8ac4,0 0 30px #ff4fa8,0 0 75px rgba(255,45,149,1),0 0 150px rgba(255,45,149,.6)}
   }
 
-  #heartWrap{position:absolute;top:7.5vh;height:15vh;width:100%;display:flex;justify-content:center;align-items:center;z-index:10}
-  #heartCv{max-height:100%;max-width:70vw;width:auto;height:auto;filter:drop-shadow(0 0 3vh rgba(255,45,120,.55))}
+  #heartWrap{position:absolute;top:7vh;height:16vh;width:100%;display:flex;justify-content:center;align-items:center;z-index:10}
+  #heartCv{filter:drop-shadow(0 0 3vh rgba(255,45,120,.55))}
 
   #message{
-    position:absolute;top:24vh;width:92%;left:4%;text-align:center;z-index:10;
+    position:absolute;top:24.5vh;width:92%;left:4%;text-align:center;z-index:10;
     font-weight:600;line-height:1.18;color:#ffdceb;
-    font-size:clamp(11px,min(4.6vw,2.5vh),22px);
+    font-size:clamp(12px,min(4.8vw,2.6vh),22px);
     text-shadow:0 0 12px rgba(255,95,165,.45),0 2px 0 rgba(20,4,18,.6);
   }
 
   #scene{
-    position:absolute;top:47vh;height:33vh;width:100%;z-index:10;
+    position:absolute;top:45vh;height:35vh;width:100%;z-index:10;
     display:flex;justify-content:center;align-items:flex-end;
   }
-  #catLCv{height:70%;width:auto;max-width:34vw;margin-right:-6%;z-index:12}
-  #bouquetCv{height:100%;width:auto;max-width:56vw;z-index:11}
-  #catRCv{height:70%;width:auto;max-width:34vw;margin-left:-6%;z-index:12}
+  #catLCv{margin-right:-3vw;z-index:12}
+  #bouquetCv{z-index:11}
+  #catRCv{margin-left:-3vw;z-index:12}
 
-  #foxCv{position:absolute;bottom:4.5vh;height:15vh;width:auto;z-index:15;pointer-events:none;visibility:hidden}
+  #foxCv{position:absolute;bottom:5vh;z-index:15;pointer-events:none;visibility:hidden}
 
   #sig{
     position:absolute;right:2vw;bottom:1vh;z-index:20;text-align:right;
@@ -59,6 +65,7 @@
 </head>
 <body>
 
+<div id="miss"></div>
 <canvas id="bg"></canvas>
 <canvas id="fx"></canvas>
 
@@ -81,11 +88,14 @@
 
 <script>
 "use strict";
-/* ============ ЗАГРУЗКА АССЕТОВ + ХРОМАКЕЙ ============ */
+/* ============ ЗАГРУЗКА, ХРОМАКЕЙ, АВТОКРОК ============ */
 const SRC={heart:'heart.png',catL:'cat_white.png',catR:'cat_tabby.png',bouquet:'bouquet.png',fox:'fox_sheet.png'};
+const missing=[];
 function load(k){return new Promise(res=>{const im=new Image();im.crossOrigin='anonymous';
-  im.onload=()=>res(im);im.onerror=()=>res(null);im.src=SRC[k];});}
-function keyOut(img){ /* вырезаем зелёный фон */
+  im.onload=()=>res(im);
+  im.onerror=()=>{missing.push(SRC[k]);res(null);};
+  im.src=SRC[k];});}
+function keyOut(img){
   const c=document.createElement('canvas');c.width=img.naturalWidth;c.height=img.naturalHeight;
   const x=c.getContext('2d');x.drawImage(img,0,0);
   let id;try{id=x.getImageData(0,0,c.width,c.height);}catch(e){return c;}
@@ -96,24 +106,51 @@ function keyOut(img){ /* вырезаем зелёный фон */
   }
   x.putImageData(id,0,0);return c;
 }
+function trim(c){ /* обрезка пустых полей по альфе */
+  let id;try{id=c.getContext('2d').getImageData(0,0,c.width,c.height);}catch(e){return c;}
+  const d=id.data;let minx=c.width,miny=c.height,maxx=-1,maxy=-1;
+  for(let y=0;y<c.height;y++)for(let x=0;x<c.width;x++){
+    if(d[(y*c.width+x)*4+3]>10){
+      if(x<minx)minx=x;if(x>maxx)maxx=x;if(y<miny)miny=y;if(y>maxy)maxy=y;}}
+  if(maxx<0)return c;
+  const o=document.createElement('canvas');o.width=maxx-minx+1;o.height=maxy-miny+1;
+  o.getContext('2d').drawImage(c,minx,miny,o.width,o.height,0,0,o.width,o.height);
+  return o;
+}
 function flipC(c){const f=document.createElement('canvas');f.width=c.width;f.height=c.height;
   const x=f.getContext('2d');x.translate(c.width,0);x.scale(-1,1);x.drawImage(c,0,0);return f;}
-function mount(id,sprite){const el=document.getElementById(id);
+
+/* ============ РЕЕСТР СПРАЙТОВ + РАЗМЕТКА 9:16 ============ */
+let VW=0,VH=0;
+const REG=[];
+function reg(id,sprite,wF,hF){
+  const el=document.getElementById(id);
   el.width=sprite.width;el.height=sprite.height;
-  el.getContext('2d').drawImage(sprite,0,0);}
+  el.getContext('2d').drawImage(sprite,0,0);
+  const r={el,w:sprite.width,h:sprite.height,wF:wF,hF:hF};
+  REG.push(r);fit(r);
+}
+function fit(r){
+  const W=VW*r.wF,H=VH*r.hF,s=Math.min(W/r.w,H/r.h);
+  r.el.style.width=Math.round(r.w*s)+'px';
+  r.el.style.height=Math.round(r.h*s)+'px';
+}
+function fitAll(){REG.forEach(fit);foxTarget();}
 
 /* ============ ФОН / ФЕЙЕРВЕРКИ ============ */
 const bg=document.getElementById('bg'),bx=bg.getContext('2d');
 const fx=document.getElementById('fx'),fxx=fx.getContext('2d');
-let VW=0,VH=0,stars=[],rockets=[],sparks=[],flashes=[],dust=[],launchT=.3;
+let stars=[],rockets=[],sparks=[],flashes=[],dust=[],launchT=.3;
 function resize(){
   VW=bg.width=fx.width=innerWidth;VH=bg.height=fx.height=innerHeight;
   stars=[];const n=Math.min(200,VW*VH/9000|0);
   for(let i=0;i<n;i++)stars.push({x:Math.random()*VW,y:Math.random()*VH,
     s:Math.random()<.8?1:2,p:Math.random()*6.28,v:.6+Math.random()*2.2,
     c:['#ffffff','#cdd8ff','#ffe8c8','#ffd2e6'][Math.random()*4|0]});
+  fitAll();
 }
-addEventListener('resize',resize);resize();
+addEventListener('resize',resize);
+VW=innerWidth;VH=innerHeight;
 function stepFx(dt){
   launchT-=dt;
   if(launchT<=0){launchT=.16+Math.random()*.26;
@@ -154,7 +191,7 @@ function drawFx(dt,t){
   fxx.globalAlpha=1;
 }
 
-/* ============ ЛИСА: СПРАЙТ-ЛИСТ И СОСТОЯНИЯ ============ */
+/* ============ ЛИСА ============ */
 const foxCv=document.getElementById('foxCv'),foxCtx=foxCv.getContext('2d');
 let runFrames=[],sitFrames=[],foxReady=false;
 const fox={state:'wait',x:0,t0:performance.now(),fi:0,ft:0,target:0};
@@ -164,18 +201,15 @@ function buildFox(sheet){
   const cell=(cx,cy)=>{const w=k.width/4,h=k.height/2;
     const o=document.createElement('canvas');o.width=w-inset*2;o.height=h-inset*2;
     o.getContext('2d').drawImage(k,cx*w+inset,cy*h+inset,o.width,o.height,0,0,o.width,o.height);
-    return o;};
-  /* верхний ряд — бег; кадры 1-3 смотрят вправо => зеркалим влево */
+    return trim(o);};
   runFrames=[cell(0,0),flipC(cell(1,0)),flipC(cell(2,0)),flipC(cell(3,0))];
-  /* нижний ряд — сидит/машет */
   const s0=flipC(cell(1,1)),s1=flipC(cell(2,1)),s2=cell(3,1);
   sitFrames=[s2,s0,s1,s0];
-  foxCv.width=runFrames[0].width;foxCv.height=runFrames[0].height;
-  foxReady=true;foxTarget();fox.x=VW+60;
+  reg('foxCv',runFrames[0],.5,.16);
+  foxReady=true;fox.x=VW+60;foxCv.style.visibility='hidden';
 }
 function foxTarget(){if(!foxReady)return;
   fox.target=Math.max(10,VW*.38-foxCv.getBoundingClientRect().width/2);}
-addEventListener('resize',foxTarget);
 function stepFox(dt,now){
   if(!foxReady)return null;
   const el=(now-fox.t0)/1000;
@@ -208,14 +242,20 @@ function drawFox(frame,now){
   foxCv.style.transform=fox.state==='run'?('translateY('+Math.round(Math.sin(now/45)*2)+'px)'):'';
 }
 
-/* ============ СТАТИКА ============ */
+/* ============ СТАТИКА (9:16 пропорции) ============ */
 Promise.all([load('heart'),load('catL'),load('catR'),load('bouquet'),load('fox')]).then(a=>{
+  if(missing.length){
+    const m=document.getElementById('miss');
+    m.style.display='block';
+    m.textContent='НЕ ХВАТАЕТ ФАЙЛОВ РЯДОМ С index.html: '+missing.join(', ');
+  }
   const[heart,catL,catR,bouquet,foxSheet]=a;
-  if(heart)mount('heartCv',keyOut(heart));
-  if(catL)mount('catLCv',keyOut(catL));
-  if(catR)mount('catRCv',keyOut(catR));
-  if(bouquet)mount('bouquetCv',keyOut(bouquet));
+  if(heart)reg('heartCv',trim(keyOut(heart)),.62,.16);
+  if(catL)reg('catLCv',trim(keyOut(catL)),.30,.26);
+  if(catR)reg('catRCv',trim(keyOut(catR)),.30,.26);
+  if(bouquet)reg('bouquetCv',trim(keyOut(bouquet)),.56,.34);
   if(foxSheet)buildFox(foxSheet);
+  resize();
 });
 
 /* ============ ЦИКЛ ============ */
