@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>С Днём Рождения, Настя!</title>
+    <style>
+        body {
+            background-color: #111;
+            color: #fff;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        h1 {
+            color: #ff3366;
+            text-align: center;
+            font-size: 2.5rem;
+            text-shadow: 3px 3px 0px #333;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            color: #ffcc00;
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        /* Общие настройки для пиксельной графики */
+        .pixel-art {
+            display: grid;
+            gap: 2px;
+            margin: 20px auto;
+            background-color: #222;
+            padding: 10px;
+            border: 4px solid #444;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+
+        .pixel {
+            width: 15px;
+            height: 15px;
+            background-color: transparent;
+        }
+
+        /* 1. Сетка СЕРДЦА (11x9) */
+        .heart-grid {
+            grid-template-columns: repeat(11, 15px);
+        }
+
+        /* 2. Сетка БУКЕТА ЦВЕТОВ (11x11) */
+        .bouquet-grid {
+            grid-template-columns: repeat(11, 15px);
+        }
+
+        /* Цвета пикселей */
+        .r { background-color: #ff0044; } /* Красный */
+        .dr { background-color: #b30030; } /* Темно-красный для объема */
+        .g { background-color: #00cc44; } /* Зеленый (стебли) */
+        .dg { background-color: #00882d; } /* Темно-зеленый */
+        .y { background-color: #ffcc00; } /* Желтый */
+        .p { background-color: #ff00ff; } /* Розовый/Фиолетовый */
+        .b { background-color: #00ccff; } /* Голубой */
+        .or { background-color: #ff6600; } /* Оранжевый */
+
+        /* Анимация фейерверка на фоне */
+        .fw {
+            position: fixed;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: explode 2s infinite ease-out;
+            opacity: 0;
+        }
+
+        @keyframes explode {
+            0% { transform: translate(0, 100vh) scale(1); opacity: 1; }
+            50% { opacity: 1; }
+            100% { transform: translate(var(--mx), var(--my)) scale(0); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <h1>С ДНЁМ РОЖДЕНИЯ, НАСТЯ! 🎉</h1>
+    <div class="subtitle">Ты супер! Пусть этот день будет самым ярким! ✨</div>
+
+    <!-- БОЛЬШОЕ КРАСНОЕ СЕРДЦЕ ИЗ КВАДРАТОВ -->
+    <div class="pixel-art heart-grid">
+        <!-- Строка 1 -->
+        <div class="pixel"></div><div class="pixel r"></div><div class="pixel r"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel r"></div><div class="pixel r"></div><div class="pixel"></div>
+        <!-- Строка 2 -->
+        <div class="pixel r"></div><div class="pixel r"></div><div class="pixel r"></div><div class="pixel r"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel r"></div><div class="pixel r"></div><div class="pixel r"></div><div class="pixel r"></div>
+        <!-- Строка 3 -->
+        <div class="pixel r"></div><div class="pixel dr"></div><div class="pixel r"></div><div class="pixel r"></div><div class="pixel r"></div><div class="pixel"></div><div class="pixel r"></div><div class="pixel r"></div><div class="pixel r"></div><div class="pixel dr"></div><div class="pixel r"></div>
+        <!-- Строка 4 -->
+        <div class="pixel r"></div><div class="pixel dr"></div><div class="pixel dr"></div><div class="pixel r"></div><div class="pixel r"></div><div class="pixel r"></div><div class="pixel r"></div><div class="pixel r"></div><div class="pixel dr"></div><div class="pixel dr"></div><div class="pixel r"></div>
+        <!-- Строка 5 -->
+        <div class="pixel"></div><div class="pixel r"></div><div class="pixel dr"></div><div class="pixel dr"></div><div class="pixel r"></div><div class="pixel r"></div><div class="pixel r"></div><div class="pixel dr"></div><div class="pixel dr"></div><div class="pixel r"></div><div class="pixel"></div>
+        <!-- Строка 6 -->
+        <div class="pixel"></div><div class="pixel"></div><div class="pixel r"></div><div class="pixel dr"></div><div class="pixel dr"></div><div class="pixel r"></div><div class="pixel dr"></div><div class="pixel dr"></div><div class="pixel r"></div><div class="pixel"></div><div class="pixel"></div>
+        <!-- Строка 7 -->
+        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel r"></div><div class="pixel dr"></div><div class="pixel dr"></div><div class="pixel dr"></div><div class="pixel r"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+        <!-- Строка 8 -->
+        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel r"></div><div class="pixel dr"></div><div class="pixel r"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+        <!-- Строка 9 -->
+        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel r"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+    </div>
+
+    <!-- ИМПРОВИЗИРОВАННЫЙ БУКЕТ ЦВЕТОВ -->
+    <div class="pixel-art bouquet-grid">
+        <!-- Бутоны цветов сверху -->
+        <div class="pixel"></div><div class="pixel p"></div><div class="pixel p"></div><div class="pixel"></div><div class="pixel y"></div><div class="pixel y"></div><div class="pixel"></div><div class="pixel b"></div><div class="pixel b"></div><div class="pixel"></div><div class="pixel"></div>
+        <div class="pixel p"></div><div class="pixel or"></div><div class="pixel p"></div><div class="pixel"></div><div class="pixel y"></div><div class="pixel or"></div><div class="pixel y"></div><div class="pixel"></div><div class="pixel b"></div><div class="pixel or"></div><div class="pixel b"></div>
+        <div class="pixel"></div><div class="pixel p"></div><div class="pixel p"></div><div class="pixel"></div><div class="pixel y"></div><div class="pixel y"></div><div class="pixel"></div><div class="pixel b"></div><div class="pixel b"></div><div class="pixel"></div><div class="pixel"></div>
+        <!-- Стебли и листья -->
+        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel g"></div><div class="pixel"></div><div class="pixel g"></div><div class="pixel"></div><div class="pixel g"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+        <div class="pixel"></div><div class="pixel"></div><div class="pixel g"></div><div class="pixel g"></div><div class="pixel dg"></div><div class="pixel g"></div><div class="pixel dg"></div><div class="pixel g"></div><div class="pixel g"></div><div class="pixel"></div><div class="pixel"></div>
+        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel dg"></div><div class="pixel g"></div><div class="pixel g"></div><div class="pixel g"></div><div class="pixel dg"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel dg"></div><div class="pixel g"></div><div class="pixel dg"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+        <!-- Обвязка букета (бантик) -->
+        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel r"></div><div class="pixel r"></div><div class="pixel or"></div><div class="pixel r"></div><div class="pixel r"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+        <!-- Ножка букета -->
+        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel dg"></div><div class="pixel g"></div><div class="pixel dg"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel dg"></div><div class="pixel"></div><div class="pixel dg"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+        <div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel dg"></div><div class="pixel"></div><div class="pixel dg"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div><div class="pixel"></div>
+    </div>
+
+    <!-- СКРИПТ ДЛЯ ГЕНЕРАЦИИ БЕСКОНЕЧНОГО ФЕЙЕРВЕРКА -->
+    <script>
+        const colors = ['#ff0055', '#00ffcc', '#ffcc00', '#ff00ff', '#00ff00', '#ffff00'];
+        
+        function createFirework() {
+            for (let i = 0; i < 30; i++) {
+                const fw = document.createElement('div');
+                fw.classList.add('fw');
+                
+                // Случайная начальная точка внизу экрана
+                const startX = Math.random() * 100;
+                fw.style.left = startX + 'vw';
+                fw.style.bottom = '0px';
+                fw.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
