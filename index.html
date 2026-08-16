@@ -38,29 +38,32 @@
   #heartCv{filter:drop-shadow(0 0 3vh rgba(255,45,120,.55))}
 
   #message{
-    position:absolute;top:24.5vh;width:92%;left:4%;text-align:center;z-index:10;
+    position:absolute;top:24vh;width:92%;left:4%;text-align:center;z-index:10;
     font-weight:600;line-height:1.18;color:#ffdceb;
     font-size:clamp(12px,min(4.8vw,2.6vh),22px);
     text-shadow:0 0 12px rgba(255,95,165,.45),0 2px 0 rgba(20,4,18,.6);
   }
 
+  /* сцена якорится верхом к поздравлению, высота по контенту */
   #scene{
-    position:absolute;top:43vh;height:35vh;width:100%;z-index:10;
+    position:absolute;top:40vh;width:100%;z-index:10;
     display:flex;justify-content:center;align-items:flex-end;
   }
-  #catLCv{margin-right:-2vw;z-index:12}
+  #catLCv{margin-right:-2vw;margin-bottom:1.5vh;z-index:12}
   #bouquetCv{z-index:11}
-  #catRCv{margin-left:-2vw;z-index:12}
+  #catRCv{margin-left:-2vw;margin-bottom:1.5vh;z-index:12}
 
   #foxCv{position:absolute;bottom:5vh;z-index:15;pointer-events:none;visibility:hidden}
 
+  /* подпись: прозрачная, под лисой по z */
   #sig{
-    position:absolute;right:2vw;bottom:1vh;z-index:20;text-align:right;
+    position:absolute;right:2vw;bottom:1vh;z-index:14;text-align:right;
+    background:transparent;pointer-events:none;
     font-family:'VT323',monospace;font-size:clamp(8px,1.5vh,13px);line-height:1.15;
     color:#54ff7e;text-shadow:0 0 4px #2bff5f,0 0 10px rgba(0,255,80,.5);
     opacity:0;transition:opacity 1.2s ease;white-space:nowrap;
   }
-  #sig.show{opacity:.92}
+  #sig.show{opacity:.9}
 </style>
 </head>
 <body>
@@ -251,9 +254,9 @@ Promise.all([load('heart'),load('catL'),load('catR'),load('bouquet'),load('fox')
   }
   const[heart,catL,catR,bouquet,foxSheet]=a;
   if(heart)reg('heartCv',trim(keyOut(heart)),.62,.16);
-  if(catL)reg('catLCv',trim(keyOut(catL)),.27,.25);
-  if(catR)reg('catRCv',trim(keyOut(catR)),.27,.25);
-  if(bouquet)reg('bouquetCv',trim(keyOut(bouquet)),.54,.33);
+  if(catL)reg('catLCv',trim(keyOut(catL)),.24,.24);
+  if(catR)reg('catRCv',trim(keyOut(catR)),.24,.24);
+  if(bouquet)reg('bouquetCv',trim(keyOut(bouquet)),.52,.34);
   if(foxSheet)buildFox(foxSheet);
   resize();
 });
