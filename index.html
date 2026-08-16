@@ -1,592 +1,488 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>С Днём Рождения, Настя! 🎉</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎂</text></svg>">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&display=swap" rel="stylesheet">
-<style>
-  *{margin:0;padding:0;box-sizing:border-box}
-  html,body{min-height:100%}
-  body{
-    min-height:100vh;overflow-x:hidden;
-    font-family:'Caveat',cursive;color:#ffd9e9;
-    background:#04051a;
-    background-image:radial-gradient(1100px 700px at 50% -8%, #1b2160 0%, #10143c 42%, #070a24 78%, #04051a 100%);
-  }
-  .pix{image-rendering:crisp-edges;image-rendering:pixelated;display:block}
-  #fx{position:fixed;inset:0;z-index:0;pointer-events:none}
-  main{
-    position:relative;z-index:1;
-    display:flex;flex-direction:column;align-items:center;text-align:center;
-    padding:clamp(20px,4vh,46px) 16px 225px;
-  }
-  h1{
-    font-weight:700;font-size:clamp(2.3rem,6.5vw,4.5rem);line-height:1.12;
-    color:#ff51a9;letter-spacing:.02em;
-    animation:neon 2.8s ease-in-out infinite;
-  }
-  @keyframes neon{
-    0%,100%{text-shadow:0 0 7px #ff5fae,0 0 20px #ff2d95,0 0 48px rgba(255,45,149,.85),0 0 100px rgba(255,45,149,.45),0 0 160px rgba(255,45,149,.25)}
-    50%{text-shadow:0 0 10px #ff8ac4,0 0 30px #ff4fa8,0 0 75px rgba(255,45,149,1),0 0 150px rgba(255,45,149,.65),0 0 220px rgba(255,45,149,.35)}
-  }
-  #heart{
-    width:clamp(150px,32vmin,235px);margin-top:clamp(16px,3vh,30px);
-    filter:drop-shadow(0 12px 22px rgba(190,10,70,.5)) drop-shadow(0 0 26px rgba(255,60,130,.35));
-    animation:floaty 3.6s ease-in-out infinite;
-  }
-  @keyframes floaty{50%{transform:translateY(-8px)}}
-  #msg{
-    max-width:840px;margin-top:clamp(18px,3.4vh,34px);
-    font-size:clamp(1.5rem,3.3vw,2.45rem);font-weight:600;line-height:1.34;
-    color:#ffdceb;
-    text-shadow:0 0 16px rgba(255,95,165,.45),0 0 46px rgba(255,60,140,.25),0 2px 0 rgba(20,4,18,.6);
-  }
-  #cast{
-    display:flex;align-items:flex-end;justify-content:center;
-    gap:clamp(4px,1.6vw,22px);margin-top:clamp(26px,5vh,52px);
-  }
-  #cat{width:clamp(86px,16.5vmin,148px);animation:bob 2s ease-in-out .2s infinite}
-  #kitty{width:clamp(86px,16.5vmin,148px);animation:bob 2s ease-in-out .7s infinite}
-  #bouquet{width:clamp(215px,45vmin,360px);filter:drop-shadow(0 14px 20px rgba(0,0,0,.45))}
-  @keyframes bob{50%{transform:translateY(-5px)}}
-  @media (max-width:600px){
-    #cast{flex-wrap:wrap}
-    #bouquet{order:-1}
-  }
-  #fox{
-    position:fixed;left:100vw;bottom:5px;z-index:5;pointer-events:none;
-    width:clamp(170px,29vmin,255px);
-    filter:drop-shadow(0 8px 10px rgba(0,0,0,.5));
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>С Днём Рождения, Настя!</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=VT323&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body {
+            width: 100%; height: 100%; overflow: hidden;
+            background-color: #05051a;
+            font-family: 'Caveat', cursive;
+            color: white;
+            touch-action: none;
+        }
+
+        /* Жесткая сетка без скролла */
+        #app {
+            position: relative; width: 100vw; height: 100vh; height: 100dvh;
+            display: flex; flex-direction: column; align-items: center;
+        }
+
+        /* Фоны и эффекты */
+        #bg-canvas, #fx-canvas {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none;
+        }
+
+        /* 1. Заголовок (0-12%) */
+        #header {
+            position: absolute; top: 4vh; width: 100%; text-align: center; z-index: 10;
+            font-size: 8.5vw; font-weight: 700; color: #ff66b2; letter-spacing: 1px;
+            text-shadow: 0 0 5px #ff66b2, 0 0 15px #ff007f, 0 0 30px #ff007f;
+            animation: pulse 2s infinite alternate;
+        }
+        @keyframes pulse {
+            from { text-shadow: 0 0 5px #ff66b2, 0 0 15px #ff007f, 0 0 20px #ff007f; }
+            to { text-shadow: 0 0 8px #ff99cc, 0 0 20px #ff3399, 0 0 40px #ff007f, 0 0 60px #ff007f; }
+        }
+
+        /* 2. Сердце (12-25%) */
+        #heart-container {
+            position: absolute; top: 13vh; width: 100%; height: 12vh;
+            display: flex; justify-content: center; align-items: center; z-index: 10;
+        }
+
+        /* 3. Текст (26-52%) */
+        #message {
+            position: absolute; top: 27vh; width: 90%; text-align: center; z-index: 10;
+            font-size: 5.8vw; line-height: 1.15; color: #fff0f5;
+            text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 0 0 10px rgba(255,105,180,0.5);
+        }
+
+        /* 4. Сцена с котами и букетом (52-85%) */
+        #scene {
+            position: absolute; top: 52vh; width: 100%; height: 33vh; z-index: 10;
+            display: flex; justify-content: center; align-items: flex-end;
+        }
+        .sprite-container { position: relative; display: flex; justify-content: center; align-items: flex-end; }
+        #cat-left { width: 28vw; height: 28vw; margin-right: -2vw; z-index: 12; }
+        #bouquet { width: 45vw; height: 45vw; z-index: 13; margin-bottom: 2vh; }
+        #cat-right { width: 28vw; height: 28vw; margin-left: -2vw; z-index: 12; }
+
+        /* 5. Лиса (85-100%) */
+        #fox-container {
+            position: absolute; bottom: 2vh; left: 0; width: 100%; height: 15vh; z-index: 15; pointer-events: none;
+        }
+        #fox-canvas { position: absolute; bottom: 0; image-rendering: pixelated; }
+
+        /* 6. Консоль (правый нижний угол) */
+        #console {
+            position: absolute; bottom: 2vh; right: 2vw; z-index: 20;
+            background: rgba(0, 15, 0, 0.85); border: 2px solid #33ff33; border-radius: 4px;
+            padding: 4px 8px; font-family: 'VT323', monospace; font-size: 3.5vw; color: #33ff33;
+            text-shadow: 0 0 4px #33ff33; opacity: 0; transition: opacity 1s ease-in;
+            box-shadow: 0 0 10px rgba(51, 255, 51, 0.3) inset;
+        }
+        #console.visible { opacity: 1; }
+        #console-header { display: flex; justify-content: flex-end; margin-bottom: 2px; font-size: 3vw; color: #88ff88;}
+
+        canvas { image-rendering: pixelated; image-rendering: crisp-edges; }
+    </style>
 </head>
 <body>
 
-<canvas id="fx" class="pix"></canvas>
+<div id="app">
+    <canvas id="bg-canvas"></canvas>
+    <canvas id="fx-canvas"></canvas>
 
-<main>
-  <h1>С ДНЁМ РОЖДЕНИЯ, НАСТЯ! 🎉</h1>
-  <canvas id="heart" class="pix"></canvas>
-  <p id="msg">Настя, с 23-летием тебя! В этом прекрасном возрасте перед тобой открыт весь мир и все дороги. Оставайся всегда такой же невероятно яркой, искренней и потрясающей девушкой. Смело иди навстречу своим самым заветным мечтам, расцветай с каждым днём и пусть твоя улыбка никогда не гаснет!</p>
-  <div id="cast">
-    <canvas id="cat" class="pix"></canvas>
-    <canvas id="bouquet" class="pix"></canvas>
-    <canvas id="kitty" class="pix"></canvas>
-  </div>
-</main>
+    <div id="header">С ДНЁМ РОЖДЕНИЯ, НАСТЯ! 🎉</div>
+    
+    <div id="heart-container">
+        <canvas id="heart-canvas"></canvas>
+    </div>
 
-<canvas id="fox" class="pix"></canvas>
+    <div id="message">
+        Настя, с 23-летием тебя!<br>
+        В этом прекрасном возрасте перед тобой открыт весь мир и все дороги. Оставайся всегда такой же невероятно яркой, искренней и потрясающей девушкой. Смело иди навстречу своим самым заветным мечтам, расцветай с каждым днём и пусть твоя улыбка никогда не гаснет!
+    </div>
+
+    <div id="scene">
+        <div class="sprite-container" id="cat-left"><canvas id="cat-l-canvas"></canvas></div>
+        <div class="sprite-container" id="bouquet"><canvas id="bouquet-canvas"></canvas></div>
+        <div class="sprite-container" id="cat-right"><canvas id="cat-r-canvas"></canvas></div>
+    </div>
+
+    <div id="fox-container">
+        <canvas id="fox-canvas"></canvas>
+    </div>
+
+    <div id="console">
+        <div id="console-header">_口X</div>
+        Исключительно для дорогой<br>любимой Настеньки от друга.<br><br>crafted by Hoodlum.
+    </div>
+</div>
 
 <script>
-"use strict";
-const REDUCED = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-/* ================= УТИЛИТЫ ПИКСЕЛЬ-АРТА ================= */
-function outlineGrid(g,w,h,color){
-  const fill=[];
-  for(let i=0;i<g.length;i++){
-    if(g[i]) continue;
-    const x=i%w,y=(i/w)|0;
-    if((x>0&&g[i-1])||(x<w-1&&g[i+1])||(y>0&&g[i-w])||(y<h-1&&g[i+w])) fill.push(i);
-  }
-  for(const i of fill) g[i]=color;
-}
-function gridToCanvas(g,w,h){
-  const c=document.createElement('canvas');c.width=w;c.height=h;
-  const ctx=c.getContext('2d');
-  for(let i=0;i<g.length;i++) if(g[i]){ctx.fillStyle=g[i];ctx.fillRect(i%w,(i/w)|0,1,1);}
-  return c;
-}
-function buildSprite(rows,palette,outlineHex){
-  const h=rows.length,w=rows[0].length;
-  const g=new Array(w*h).fill(null);
-  for(let y=0;y<h;y++)for(let x=0;x<w;x++){
-    const ch=rows[y][x];
-    if(ch!=='.'&&palette[ch]) g[y*w+x]=palette[ch];
-  }
-  if(outlineHex) outlineGrid(g,w,h,outlineHex);
-  return gridToCanvas(g,w,h);
-}
-function mount(id,spr){
-  const el=document.getElementById(id);
-  el.width=spr.width;el.height=spr.height;
-  el.getContext('2d').drawImage(spr,0,0);
-}
-
-/* ================= 1. СЕРДЦЕ (21x14) ================= */
-const HEART_ROWS=[
-".hhhhhhhhh.hhhhhhhRR.",
-"HWhhhhhhhh.hhhhhhhRRd",
-"HhhRRRRRRRRRRRRRRRRRd",
-"HhRRRRRRRRRRRRRRRRRdd",
-".RRRRRRRRRRRRRRRRRdd.",
-"..RRRRRRRRRRRRRRRdd..",
-"...RRRRRRRRRRRRRdd...",
-"....RRRRRRRRRRRdd....",
-".....RRRRRRRRRdd.....",
-"......RRRRRRRdd......",
-".......RRRRRdd.......",
-"........RRRdd........",
-".........Rdd.........",
-"..........d.........."
-];
-const HEART_PAL={h:'#ff5d85',H:'#ff9dbb',W:'#ffdce9',R:'#cf0f45',d:'#8c0a2c'};
-
-/* ================= 2. БЕЛЫЙ КОТ В ЧЁРНОМ ЖИЛЕТЕ (22x28, вправо) ================= */
-const CAT_ROWS=[
-".....w......w.........",
-"....www....www........",
-"...wwpww..wwpww.......",
-"..wwpppwwwwwpppw......",
-".kwwwwwwwwwwwwwwwk....",
-"kwwwwwwwwwwwwwwwwwk...",
-"kwwwwwxkwwwwxkwwwwk...",
-"kwwwwwkkwwwwkkwwwwk...",
-"kwwwbwwwwwwwbwwwppkgg.",
-"kwwwwwwwwwwwkkwwk..gg.",
-".kwwwwwwwwwwwwwwk..gg.",
-"..kwwwwwwwwwwwwk......",
-"...kvvvvvvvvvvvvww....",
-"..kvvvvvvvvvvvvvvvvww.",
-".kvvvvvvvvvwwvvvvk....",
-".kvvvvvvvvvywvvvvk....",
-".kvvvvvvvvvwyvvvvk....",
-".kvvvvvvvvvwwvvvvk....",
-".kvvvvvvvvvvvvvvvk....",
-".wwkvvvvvvvvvvvvvk....",
-".wwkwwwwwwwwwwwwk.....",
-"..kwwwwwwwwwwwwk......",
-"..kwwwwwwwwwwwwk......",
-"..kwwk......kwwk......",
-"..kwwk......kwwk......",
-"..kwwk......kwwk......",
-".kwwwwk....kwwwwk.....",
-".kwwwwk....kwwwwk....."
-];
-const CAT_PAL={w:'#ffffff',x:'#f8fbff',k:'#1e1e2a',p:'#ffb1c6',b:'#ffc4d2',v:'#181822',y:'#ffd23f',g:'#d9deea'};
-
-/* ================= 3. СЕРО-РЫЖЕ-ПЕСОЧНАЯ КОШКА (22x28, влево) ================= */
-const KITTY_ROWS=[
-".......a......a.......",
-"......aaa....aaa......",
-".....sspss..sspss.....",
-"......spppssssspppss..",
-"....ksssstttssssssssk.",
-"...ksssttssssssssssk..",
-"...kssssxkssssxksssk..",
-"...ksssskksssskksssk..",
-"g.kppsbsssssssbsk.....",
-"ggksskkkkkssssssssk...",
-"...ksssssssssssssk....",
-"....ksssssssssssk.....",
-"..ss.rrr..d..rrrsk....",
-".ssksrrrrdddrrrrsk....",
-"..kllrrr..d..rrrtk....",
-".klllsssssssssssttk...",
-".klllsssssssssssttk...",
-".klllsssssssssssttk...",
-".kssssssssssssssssk.t.",
-"..ksssssssssssssk.tt..",
-"..ksssssssssssssk.ss..",
-"..ksssssssssssssk.tt..",
-"..ksssssssssssssk.....",
-"..kssk......kssk......",
-"..kssk......kssk......",
-"..kssk......kssk......",
-".kssssk....kssssk.....",
-".kssssk....kssssk....."
-];
-const KITTY_PAL={s:'#e8a95e',l:'#f8ddb0',t:'#9a6a38',a:'#a89c90',p:'#ff9eb5',r:'#e62e52',d:'#8f1030',x:'#ffffff',k:'#2a1f16',g:'#ead9c0',b:'#f2a08c'};
-
-/* ================= 4. БУКЕТ (64x78, процедурно) ================= */
-function buildBouquet(){
-  const W=64,H=78,g=new Array(W*H).fill(null);
-  const set=(x,y,c)=>{x=Math.round(x);y=Math.round(y);if(x>=0&&x<W&&y>=0&&y<H)g[y*W+x]=c;};
-  const rect=(x,y,w,h,c)=>{for(let j=0;j<h;j++)for(let i=0;i<w;i++)set(x+i,y+j,c);};
-  const circ=(cx,cy,r,c)=>{
-    for(let y=Math.floor(cy-r)-1;y<=cy+r+1;y++)
-      for(let x=Math.floor(cx-r)-1;x<=cx+r+1;x++){
-        const dx=x-cx,dy=y-cy;
-        if(dx*dx+dy*dy<=r*r+0.2)set(x,y,c);
-      }
-  };
-  const ell=(cx,cy,rx,ry,c)=>{
-    for(let y=Math.floor(cy-ry)-1;y<=cy+ry+1;y++)
-      for(let x=Math.floor(cx-rx)-1;x<=cx+rx+1;x++){
-        const dx=(x-cx)/rx,dy=(y-cy)/ry;
-        if(dx*dx+dy*dy<=1.06)set(x,y,c);
-      }
-  };
-  const line=(x0,y0,x1,y1,c,t)=>{
-    t=t||1;const n=Math.max(1,Math.ceil(Math.max(Math.abs(x1-x0),Math.abs(y1-y0))));const o=t>>1;
-    for(let i=0;i<=n;i++){
-      const x=Math.round(x0+(x1-x0)*i/n),y=Math.round(y0+(y1-y0)*i/n);
-      for(let a=-o;a<t-o;a++)for(let b=-o;b<t-o;b++)set(x+a,y+b,c);
+/**
+ * СИСТЕМА РЕНДЕРИНГА ПИКСЕЛЬ-АРТА
+ * Отрисовка по строковым картам с последующим апскейлом без сглаживания.
+ */
+const PALETTES = {
+    heart: { 'R': '#e60033', 'D': '#990022', 'W': '#ff99bb', '.': null },
+    catL: { 
+        'W': '#ffffff', 'K': '#1a1a1a', 'P': '#ffb6c1', 'E': '#000000', 'G': '#ffd700', '.': null 
+    },
+    catR: { 
+        'B': '#d2b48c', 'S': '#8b5a2b', 'W': '#ffffff', 'P': '#ffb6c1', 'E': '#000000', 'R': '#dc143c', '.': null 
+    },
+    bouquet: {
+        'G': '#228b22', 'g': '#32cd32', 'P': '#ff69b4', 'p': '#ff1493', 'Y': '#ffd700', 'y': '#ffa500', 
+        'B': '#1e90ff', 'b': '#0000cd', 'W': '#ffffff', 'R': '#dc143c', 'r': '#8b0000', '.': null
+    },
+    fox: {
+        'O': '#ff7f00', 'D': '#cc5500', 'W': '#ffffff', 'K': '#000000', '.': null
     }
-  };
-  const leaf=(x,y,c)=>{
-    const o=[[0,-2],[-1,-1],[0,-1],[1,-1],[-2,0],[-1,0],[0,0],[1,0],[2,0],[-1,1],[0,1],[1,1],[0,2]];
-    for(const p of o)set(x+p[0],y+p[1],c);
-  };
-  const flower=(x,y,petal,center,spark)=>{
-    const o=[[0,-3],[2,-2],[3,0],[2,2],[0,3],[-2,2],[-3,0],[-2,-2]];
-    for(const p of o)circ(x+p[0],y+p[1],2.15,petal);
-    circ(x,y,2.3,center);
-    if(spark)set(x-1,y-1,'#ffffff');
-  };
-
-  /* зелень */
-  ell(31,20,22,13,'#2e7a35');
-  ell(29,17,17,9.5,'#3f9c49');
-  ell(26,14,10,5.5,'#4cb258');
-  [[7,10,'#49b856'],[57,9,'#3f9c49'],[3,22,'#49b856'],[61,24,'#3f9c49'],
-   [14,3,'#49b856'],[33,2,'#57c465'],[50,4,'#3f9c49'],[6,31,'#3f9c49'],[58,32,'#49b856']]
-   .forEach(l=>leaf(l[0],l[1],l[2]));
-
-  /* цветы: розовые, жёлтые, голубые, белые */
-  const P={pk:['#ff85b3','#ffd23f'],yl:['#ffd23f','#f07f1f'],bl:['#6fc5ff','#fff3c4'],wh:['#fdf2ea','#ffcf4d']};
-  const F=[[14,12,'pk'],[25,8,'yl'],[37,7,'bl'],[48,12,'pk'],[8,20,'yl'],[19,18,'bl'],
-           [31,14,'pk'],[43,18,'yl'],[53,22,'wh'],[13,28,'bl'],[24,27,'wh'],[35,26,'pk'],
-           [46,28,'bl'],[55,30,'pk'],[29,33,'yl']];
-  for(const f of F)line(f[0],f[1]+3,32,55,'#2b7031',1);   /* стебли к точке перевязки */
-  for(const f of F){const p=P[f[2]];flower(f[0],f[1],p[0],p[1],f[2]==='bl'||f[2]==='wh');}
-  [[10,8],[20,5],[44,4],[52,8],[58,16],[5,16],[7,27],[27,11],[40,11],[50,24],[16,24],[36,31],[22,14],[46,9]]
-    .forEach(p=>set(p[0],p[1],'#eaf6ff'));                 /* гипсофила */
-
-  /* перевязь и алый бант с лентами */
-  rect(27,52,10,6,'#d6184a');rect(27,52,10,1,'#ff5d81');rect(27,57,10,1,'#9c0f33');
-  ell(22,60,7,4.5,'#e6234f');ell(42,60,7,4.5,'#e6234f');
-  ell(22,60,3.5,2,'#9c1030');ell(42,60,3.5,2,'#9c1030');
-  set(18,57,'#ff6b8a');set(19,57,'#ff6b8a');set(44,57,'#ff6b8a');set(45,57,'#ff6b8a');
-  line(30,63,26,69,'#e6234f',3);line(26,69,21,76,'#e6234f',3);
-  line(34,63,39,69,'#e6234f',3);line(39,69,44,76,'#e6234f',3);
-  line(30,63,26,69,'#ff5d7c',1);line(34,63,39,69,'#ff5d7c',1);
-  rect(30,57,5,8,'#ff5470');rect(30,63,5,2,'#c01339');rect(30,57,5,1,'#ff8ba3');
-
-  outlineGrid(g,W,H,'#0d1016');
-  return gridToCanvas(g,W,H);
-}
-
-mount('heart',buildSprite(HEART_ROWS,HEART_PAL,'#40051a'));
-mount('cat',buildSprite(CAT_ROWS,CAT_PAL,'#101018'));
-mount('kitty',buildSprite(KITTY_ROWS,KITTY_PAL,'#2b1c10'));
-mount('bouquet',buildBouquet());
-
-/* ================= 5. ФЕЙЕРВЕРКИ И ЗВЁЗДЫ ================= */
-const fxCv=document.getElementById('fx'),fxCtx=fxCv.getContext('2d');
-let VW=0,VH=0;
-const stars=[],rockets=[],sparks=[],flashes=[],dust=[];
-let launchT=0.3;
-function pick(a){return a[(Math.random()*a.length)|0];}
-
-function resizeAll(){
-  VW=fxCv.width=window.innerWidth;
-  VH=fxCv.height=window.innerHeight;
-  stars.length=0;
-  const n=Math.min(220,Math.round(VW*VH/9000));
-  for(let i=0;i<n;i++)stars.push({
-    x:Math.random()*VW,y:Math.random()*VH,
-    s:Math.random()<0.82?1:2,p:Math.random()*6.28,
-    v:0.6+Math.random()*2.2,c:pick(['#ffffff','#cdd8ff','#ffe8c8','#ffd2e6'])
-  });
-  setFoxTarget(true);
-}
-
-function stepFireworks(dt){
-  launchT-=dt;
-  if(launchT<=0){
-    launchT=REDUCED?0.5+Math.random()*0.5:0.16+Math.random()*0.26;
-    const ty=VH*(0.15+Math.random()*0.32);
-    rockets.push({
-      x:VW*(0.06+0.88*Math.random()),y:VH+4,
-      vx:(Math.random()-0.5)*70,
-      vy:-Math.sqrt(2*420*(VH+40-ty))*(1+Math.random()*0.04),
-      ty:ty,hue:(Math.random()*360)|0
-    });
-  }
-  for(let i=rockets.length-1;i>=0;i--){
-    const r=rockets[i];
-    r.vy+=420*dt;r.x+=r.vx*dt;r.y+=r.vy*dt;
-    if(Math.random()<0.6)sparks.push({x:r.x,y:r.y,vx:(Math.random()-.5)*24,vy:20+Math.random()*60,hue:45,l:0.3,ml:0.3,s:2,g:60});
-    if(r.y<=r.ty||r.vy>=-60){
-      rockets.splice(i,1);
-      flashes.push({x:r.x,y:r.y,l:0.13,ml:0.13});
-      const n=46+((Math.random()*50)|0);
-      for(let j=0;j<n;j++){
-        const a=Math.random()*6.283,sp=50+Math.pow(Math.random(),0.65)*270;
-        const l=0.9+Math.random()*1.1;
-        sparks.push({
-          x:r.x,y:r.y,
-          vx:Math.cos(a)*sp+r.vx*0.35,vy:Math.sin(a)*sp,
-          hue:((r.hue+(Math.random()<0.22?45:0))%360+360)%360,
-          l:l,ml:l,s:Math.random()<0.3?3:2,g:180
-        });
-      }
-    }
-  }
-  for(let i=sparks.length-1;i>=0;i--){
-    const s=sparks[i],f=1/(1+1.5*dt);
-    s.vx*=f;s.vy*=f;s.vy+=s.g*dt;
-    s.x+=s.vx*dt;s.y+=s.vy*dt;s.l-=dt;
-    if(s.l<=0||s.y>VH+30)sparks.splice(i,1);
-  }
-  for(let i=dust.length-1;i>=0;i--){
-    const d=dust[i];
-    d.vy+=320*dt;d.x+=d.vx*dt;d.y+=d.vy*dt;d.l-=dt;
-    if(d.l<=0)dust.splice(i,1);
-  }
-}
-
-function drawFireworks(dt,t){
-  fxCtx.clearRect(0,0,VW,VH);
-  fxCtx.globalCompositeOperation='source-over';
-  for(const st of stars){
-    const a=0.25+0.7*Math.pow(0.5+0.5*Math.sin(t*st.v+st.p),2);
-    fxCtx.globalAlpha=a;fxCtx.fillStyle=st.c;
-    fxCtx.fillRect(st.x|0,st.y|0,st.s,st.s);
-  }
-  fxCtx.globalAlpha=1;
-  fxCtx.globalCompositeOperation='lighter';
-  for(let i=flashes.length-1;i>=0;i--){
-    const f=flashes[i];
-    fxCtx.globalAlpha=Math.max(0,f.l/f.ml)*0.55;
-    fxCtx.fillStyle='#ffffff';
-    fxCtx.fillRect((f.x-13)|0,(f.y-13)|0,26,26);
-    f.l-=dt;
-    if(f.l<=0)flashes.splice(i,1);
-  }
-  for(const r of rockets){
-    fxCtx.globalAlpha=1;
-    fxCtx.fillStyle='hsl('+r.hue+',100%,75%)';
-    fxCtx.fillRect((r.x-1)|0,(r.y-2)|0,3,3);
-    fxCtx.fillStyle='rgba(255,240,200,.9)';
-    fxCtx.fillRect(r.x|0,r.y|0,1,2);
-  }
-  for(const s of sparks){
-    const a=Math.max(0,s.l/s.ml);
-    fxCtx.globalAlpha=a;
-    fxCtx.fillStyle='hsl('+s.hue+',100%,'+((55+25*a)|0)+'%)';
-    fxCtx.fillRect(s.x|0,s.y|0,s.s,s.s);
-  }
-  fxCtx.globalCompositeOperation='source-over';
-  for(const d of dust){
-    fxCtx.globalAlpha=Math.max(0,d.l/d.ml)*0.6;
-    fxCtx.fillStyle='#aeb6d4';
-    fxCtx.fillRect(d.x|0,d.y|0,2,2);
-  }
-  fxCtx.globalAlpha=1;
-}
-
-/* ================= 6. ЛИСА (программный пиксель-арт, 58x40) ================= */
-const foxCv=document.getElementById('fox'),foxCtx=foxCv.getContext('2d');
-const FW=58,FH=40;foxCv.width=FW;foxCv.height=FH;
-const FB=new Uint32Array(FW*FH);
-const offA=document.createElement('canvas');offA.width=FW;offA.height=FH;
-const ctxA=offA.getContext('2d');const imgA=ctxA.createImageData(FW,FH);
-const U32A=new Uint32Array(imgA.data.buffer);
-const offB=document.createElement('canvas');offB.width=FW;offB.height=FH;
-const ctxB=offB.getContext('2d');const imgB=ctxB.createImageData(FW,FH);
-const U32B=new Uint32Array(imgB.data.buffer);
-
-function U(hex){
-  const n=parseInt(hex.slice(1),16);
-  return (0xff000000|((n&0xff)<<16)|(n&0xff00)|((n>>16)&0xff))>>>0;
-}
-const FC={
-  or:U('#f0821f'),far:U('#bf5f0e'),cream:U('#ffe9ce'),
-  sock:U('#4a2c12'),nose:U('#26130a'),white:U('#fff8ec'),
-  inner:U('#8a4410'),out:U('#16100a')
 };
-function fset(buf,x,y,c){
-  x=Math.round(x);y=Math.round(y);
-  if(x>=0&&x<FW&&y>=0&&y<FH)buf[y*FW+x]=c;
-}
-function ffill(buf,x,y,w,h,c){for(let j=0;j<h;j++)for(let i=0;i<w;i++)fset(buf,x+i,y+j,c);}
-function fcirc(buf,cx,cy,r,c){
-  const r2=r*r+0.2;
-  for(let y=Math.floor(cy-r)-1;y<=cy+r+1;y++)
-    for(let x=Math.floor(cx-r)-1;x<=cx+r+1;x++){
-      const dx=x-cx,dy=y-cy;
-      if(dx*dx+dy*dy<=r2)fset(buf,x,y,c);
+
+// Функция отрисовки строковой карты на канвас
+function drawSprite(canvasId, map, paletteKey, scale) {
+    const canvas = document.getElementById(canvasId);
+    const ctx = canvas.getContext('2d');
+    const h = map.length;
+    const w = map[0].length;
+    
+    // Внутренний размер (реальные пиксели)
+    canvas.width = w;
+    canvas.height = h;
+    
+    // Внешний размер (апскейл)
+    canvas.style.width = `${w * scale}px`;
+    canvas.style.height = `${h * scale}px`;
+    
+    ctx.imageSmoothingEnabled = false;
+    const pal = PALETTES[paletteKey];
+
+    for (let y = 0; y < h; y++) {
+        for (let x = 0; x < w; x++) {
+            const char = map[y][x];
+            if (pal[char]) {
+                ctx.fillStyle = pal[char];
+                ctx.fillRect(x, y, 1, 1);
+            }
+        }
     }
 }
-function fell(buf,cx,cy,rx,ry,c){
-  for(let y=Math.floor(cy-ry)-1;y<=cy+ry+1;y++)
-    for(let x=Math.floor(cx-rx)-1;x<=cx+rx+1;x++){
-      const dx=(x-cx)/rx,dy=(y-cy)/ry;
-      if(dx*dx+dy*dy<=1.06)fset(buf,x,y,c);
+
+// --- КАРТЫ СПРАЙТОВ ---
+
+const HEART_MAP = [
+    ".RR.RR.",
+    "RWWRRRR",
+    "RRRRRRR",
+    "RRRRRRR",
+    ".RRRRR.",
+    "..RRR..",
+    "...R..."
+];
+
+const CAT_LEFT_MAP = [ // Белый кот в жилете
+    "..W...W..",
+    ".WPW.WPW.",
+    ".WWWWWWW.",
+    ".WEWWEWW.",
+    ".WWWPWWW.",
+    "..WWWWW..",
+    ".KKKKKKK.",
+    ".KWKKKWK.",
+    ".KWKGKWK.",
+    ".KKKKKKK.",
+    ".WW...WW.",
+    ".WW...WW."
+];
+
+const CAT_RIGHT_MAP = [ // Рыжий кот с бантом
+    "..B...B..",
+    ".BPB.BPB.",
+    ".BBBBBBB.",
+    ".BEBBEBB.",
+    ".BBBPBBB.",
+    "..BBBBB..",
+    ".RR...RR.",
+    ".BRRRRRB.",
+    ".BBBBBBB.",
+    ".BSBBSBS.",
+    ".BB...BB.",
+    ".BB...BB."
+];
+
+const BOUQUET_MAP = [ // Букет
+    "...g.g.g...",
+    "..gPgYgBg..",
+    ".gPpYYBbpG.",
+    "gPYBppYPBg.",
+    ".gBpYYpBg..",
+    "..gGgGgG...",
+    "...GGGG....",
+    "..RRRRRR...",
+    ".RrRRRRrR..",
+    "..RR..RR...",
+    "..R....R..."
+];
+
+// Лиса: 4 кадра анимации (бег) + 1 кадр (сидит и машет)
+const FOX_RUN_1 = [
+    "..OO......",
+    ".OWWO.....",
+    ".OWKOO....",
+    "..OOOOO...",
+    "...DOOOD..",
+    "..O..O.DW.",
+    ".O....O...",
+    "K......K.."
+];
+const FOX_RUN_2 = [
+    "..OO......",
+    ".OWWO.....",
+    ".OWKOO....",
+    "..OOOOO...",
+    "...DOOOD..",
+    "...O.O.DW.",
+    "..O...O...",
+    "..K...K..."
+];
+const FOX_SIT_WAVE_1 = [
+    "..OO......",
+    ".OWWO.....",
+    ".OWKOO....",
+    "..OOOOO...",
+    "..DOOOD...",
+    ".O..OODW..",
+    ".O..OO....",
+    "KK..KK...."
+];
+const FOX_SIT_WAVE_2 = [
+    "..OO......",
+    ".OWWO.....",
+    ".OWKOO....",
+    "O.OOOOO...",
+    "..DOOOD...",
+    "...OOODW..",
+    "..OOO.....",
+    "..KKK....."
+];
+
+// Инициализация статичных спрайтов
+function initSprites() {
+    // Масштаб подбираем динамически, но для базы берем примерный
+    const baseScale = Math.max(window.innerWidth / 100, 3); 
+    
+    drawSprite('heart-canvas', HEART_MAP, 'heart', baseScale * 1.5);
+    drawSprite('cat-l-canvas', CAT_LEFT_MAP, 'catL', baseScale * 1.2);
+    drawSprite('cat-r-canvas', CAT_RIGHT_MAP, 'catR', baseScale * 1.2);
+    drawSprite('bouquet-canvas', BOUQUET_MAP, 'bouquet', baseScale * 1.8);
+}
+
+/**
+ * ФОН (Звезды)
+ */
+const bgCanvas = document.getElementById('bg-canvas');
+const bgCtx = bgCanvas.getContext('2d');
+let stars = [];
+
+function initBg() {
+    bgCanvas.width = window.innerWidth;
+    bgCanvas.height = window.innerHeight;
+    stars = [];
+    for(let i=0; i<100; i++) {
+        stars.push({
+            x: Math.random() * bgCanvas.width,
+            y: Math.random() * bgCanvas.height,
+            s: Math.random() * 2,
+            a: Math.random()
+        });
     }
 }
-function fline(buf,x0,y0,x1,y1,t,c){
-  const n=Math.max(1,Math.ceil(Math.max(Math.abs(x1-x0),Math.abs(y1-y0))));
-  for(let i=0;i<=n;i++){
-    const x=Math.round(x0+(x1-x0)*i/n),y=Math.round(y0+(y1-y0)*i/n);
-    for(let a=0;a<t;a++)for(let b=0;b<t;b++)fset(buf,x+a,y+b,c);
-  }
-}
-function fear(buf,x,y){
-  const wds=[1,2,2,3,3];
-  for(let i=0;i<5;i++){
-    const w=wds[i],yy=y-4+i,x0=x-(w>>1);
-    for(let j=0;j<w;j++)fset(buf,x0+j,yy,FC.or);
-  }
-  fset(buf,x,y-1,FC.inner);
-}
-function fleg(buf,hx,hy,ph,col,gy){
-  const sw=Math.sin(ph)*4.6,lift=Math.max(0,Math.cos(ph))*3.2;
-  const fx=hx-sw,fy=gy-lift;
-  fline(buf,hx,hy,fx,fy,2,col);
-  const mx=hx+(fx-hx)*0.6,my=hy+(fy-hy)*0.6;
-  fline(buf,mx,my,fx,fy,2,FC.sock);
-  ffill(buf,fx-1,fy-1,3,2,FC.sock);
-}
-function foutline(buf){
-  const o=[];
-  for(let y=0;y<FH;y++)for(let x=0;x<FW;x++){
-    const i=y*FW+x;
-    if(!buf[i]&&((x>0&&buf[i-1])||(x<FW-1&&buf[i+1])||(y>0&&buf[i-FW])||(y<FH-1&&buf[i+FW])))o.push(i);
-  }
-  for(const i of o)buf[i]=FC.out;
+
+function drawBg() {
+    // Градиентный фон
+    let grad = bgCtx.createLinearGradient(0, 0, 0, bgCanvas.height);
+    grad.addColorStop(0, "#05051a");
+    grad.addColorStop(1, "#1a0b2e");
+    bgCtx.fillStyle = grad;
+    bgCtx.fillRect(0, 0, bgCanvas.width, bgCanvas.height);
+
+    // Звезды
+    bgCtx.fillStyle = "white";
+    stars.forEach(star => {
+        bgCtx.globalAlpha = star.a;
+        bgCtx.fillRect(star.x, star.y, star.s, star.s);
+        star.a += (Math.random() - 0.5) * 0.05;
+        if(star.a < 0.1) star.a = 0.1;
+        if(star.a > 1) star.a = 1;
+    });
+    bgCtx.globalAlpha = 1;
 }
 
-/* Бег: рысь, диагональные пары лап */
-function drawRun(buf,ph){
-  const bx=29,gy=37,bob=Math.round(Math.sin(ph*2)*0.8),by=23+bob;
-  fleg(buf,bx-4,by+4,ph+Math.PI,FC.far,gy);
-  fleg(buf,bx+6,by+4,ph,FC.far,gy);
-  const wag=Math.sin(ph)*1.3;
-  fcirc(buf,bx+11,by-1,3.4,FC.or);
-  fcirc(buf,bx+14.5,by-3+wag*0.35,3.0,FC.or);
-  fcirc(buf,bx+17.5,by-4.5+wag*0.7,2.6,FC.or);
-  fcirc(buf,bx+20,by-5.5+wag,2.1,FC.white);
-  fell(buf,bx,by,10.2,5.4,FC.or);
-  fell(buf,bx-3,by+2.2,5.6,2.8,FC.cream);
-  fcirc(buf,bx+6,by+2,3.8,FC.or);
-  fleg(buf,bx-6,by+4,ph,FC.or,gy);
-  fleg(buf,bx+8,by+4,ph+Math.PI,FC.or,gy);
-  const hx=bx-12,hy=by-7;
-  fcirc(buf,hx,hy,5.8,FC.or);
-  fcirc(buf,hx-4.2,hy+1.2,2.7,FC.cream);
-  ffill(buf,hx-7,hy+1,2,1,FC.nose);
-  fcirc(buf,hx-1.5,hy+2.8,2.3,FC.cream);
-  fear(buf,hx-2,hy-4);fear(buf,hx+3,hy-4);
-  ffill(buf,hx-3,hy-1,1,2,FC.nose);
-}
-/* Сидит и машет лапкой */
-function drawSit(buf,wave,blink){
-  const bx=31,gy=37;
-  const wag=Math.sin(wave*1.4)*1.2;
-  fcirc(buf,bx+8,gy-4,3.3,FC.or);
-  fcirc(buf,bx+12,gy-3.5+wag*0.3,2.9,FC.or);
-  fcirc(buf,bx+15,gy-3+wag*0.6,2.3,FC.white);
-  fcirc(buf,bx+4,gy-7,6.6,FC.or);
-  fell(buf,bx-1,gy-13,5.6,7.2,FC.or);
-  fell(buf,bx-3,gy-12,3.3,5.2,FC.cream);
-  fline(buf,bx,gy-15,bx,gy-4,2,FC.far);
-  fline(buf,bx,gy-6,bx,gy-3,2,FC.sock);
-  ffill(buf,bx-1,gy-2,3,2,FC.sock);
-  const sx=bx-4,sy=gy-15;
-  const a=-Math.PI/2+Math.sin(wave)*0.55;
-  const ex=sx+Math.cos(a)*6.5,ey=sy+Math.sin(a)*6.5;
-  fline(buf,sx,sy,ex,ey,2,FC.or);
-  fline(buf,sx+(ex-sx)*0.55,sy+(ey-sy)*0.55,ex,ey,2,FC.sock);
-  ffill(buf,ex-1,ey-1,3,2,FC.sock);
-  const hx=bx-6,hy=gy-24;
-  fcirc(buf,hx,hy,6,FC.or);
-  fcirc(buf,hx-4.4,hy+1.4,2.8,FC.cream);
-  ffill(buf,hx-7,hy+1,2,1,FC.nose);
-  fcirc(buf,hx-1.5,hy+3,2.3,FC.cream);
-  fear(buf,hx-2,hy-4);fear(buf,hx+3,hy-4);
-  if(blink)ffill(buf,hx-3,hy,2,1,FC.nose);
-  else ffill(buf,hx-3,hy-1,1,2,FC.nose);
+/**
+ * ФЕЙЕРВЕРКИ (Система частиц)
+ */
+const fxCanvas = document.getElementById('fx-canvas');
+const fxCtx = fxCanvas.getContext('2d');
+let particles = [];
+
+function initFx() {
+    fxCanvas.width = window.innerWidth;
+    fxCanvas.height = window.innerHeight;
 }
 
-const fox={x:0,target:0,state:'run',phase:0,phaseTarget:0,trans:0,wave:0,blinkT:0,nextBlink:3,blink:false};
-
-function setFoxTarget(force){
-  const w=foxCv.getBoundingClientRect().width||200;
-  fox.target=Math.max(10,window.innerWidth*0.30-w/2);
-  if(force&&fox.state!=='run')fox.x=fox.target;
-}
-function stepFox(dt){
-  fox.blinkT+=dt;
-  if(fox.blinkT>fox.nextBlink){fox.blinkT=0;fox.nextBlink=2.2+Math.random()*2.8;}
-  fox.blink=fox.blinkT<0.13;
-  if(fox.state==='run'){
-    const dist=fox.x-fox.target;
-    const v=Math.min(330,Math.max(55,dist*3.1));
-    const dx=Math.min(dist,v*dt);
-    fox.x-=dx;fox.phase+=dx*0.075;
-    if(Math.random()<0.4&&dust.length<140){
-      const r=foxCv.getBoundingClientRect();
-      dust.push({
-        x:r.left+r.width*(0.62+Math.random()*0.2),
-        y:window.innerHeight-4-Math.random()*6,
-        vx:20+Math.random()*80,vy:-(10+Math.random()*70),
-        l:0.45+Math.random()*0.3,ml:0.75
-      });
+class Particle {
+    constructor(x, y, color) {
+        this.x = x; this.y = y;
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 4 + 1;
+        this.vx = Math.cos(angle) * speed;
+        this.vy = Math.sin(angle) * speed;
+        this.color = color;
+        this.life = 1.0;
+        this.decay = Math.random() * 0.02 + 0.01;
+        this.size = Math.random() * 3 + 2; // Квадратные пиксельные искры
     }
-    if(dist<=2){
-      fox.x=fox.target;fox.state='sit';fox.trans=0;
-      fox.phaseTarget=Math.round(fox.phase/Math.PI)*Math.PI;
+    update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.vy += 0.05; // Гравитация
+        this.life -= this.decay;
     }
-  }else if(fox.state==='sit'){
-    fox.phase+=(fox.phaseTarget-fox.phase)*Math.min(1,dt*12);
-    fox.trans+=dt/0.42;
-    if(fox.trans>=1){fox.trans=1;fox.state='wave';fox.wave=0;}
-  }else{
-    fox.wave+=dt*5.2;
-  }
-}
-function toOff(buf,img,u32,ctx2){
-  foutline(buf);
-  u32.set(buf);
-  ctx2.putImageData(img,0,0);
-}
-function renderFox(){
-  foxCtx.clearRect(0,0,FW,FH);
-  if(fox.state==='run'){
-    FB.fill(0);drawRun(FB,fox.phase);
-    toOff(FB,imgA,U32A,ctxA);
-    foxCtx.drawImage(offA,0,0);
-  }else if(fox.state==='sit'){
-    FB.fill(0);drawRun(FB,fox.phase);toOff(FB,imgA,U32A,ctxA);
-    FB.fill(0);drawSit(FB,fox.wave,fox.blink);toOff(FB,imgB,U32B,ctxB);
-    const k=fox.trans;
-    foxCtx.globalAlpha=1-k;foxCtx.drawImage(offA,0,0);
-    foxCtx.globalAlpha=k;foxCtx.drawImage(offB,0,0);
-    foxCtx.globalAlpha=1;
-  }else{
-    FB.fill(0);drawSit(FB,fox.wave,fox.blink);
-    toOff(FB,imgA,U32A,ctxA);
-    foxCtx.drawImage(offA,0,0);
-  }
-  foxCv.style.left=Math.round(fox.x)+'px';
+    draw(ctx) {
+        ctx.globalAlpha = Math.max(0, this.life);
+        ctx.fillStyle = this.color;
+        ctx.fillRect(this.x, this.y, this.size, this.size);
+    }
 }
 
-/* ================= ЗАПУСК ================= */
-window.addEventListener('resize',resizeAll);
-resizeAll();
-fox.x=window.innerWidth+80;
-setFoxTarget(false);
-if(REDUCED){fox.state='wave';fox.x=fox.target;}
-
-let last=performance.now();
-function frame(now){
-  const dt=Math.min(0.05,(now-last)/1000);
-  last=now;
-  const t=now/1000;
-  stepFireworks(dt);
-  drawFireworks(dt,t);
-  stepFox(dt);
-  renderFox();
-  requestAnimationFrame(frame);
+function spawnFirework() {
+    const x = Math.random() * fxCanvas.width;
+    const y = Math.random() * (fxCanvas.height * 0.5);
+    const colors = ['#ff007f', '#00ffff', '#ffd700', '#33ff33', '#ff7f00'];
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    for(let i=0; i<40; i++) {
+        particles.push(new Particle(x, y, color));
+    }
 }
-requestAnimationFrame(frame);
+
+function updateFx() {
+    fxCtx.clearRect(0, 0, fxCanvas.width, fxCanvas.height);
+    if(Math.random() < 0.08) spawnFirework(); // Частота запуска
+    
+    for(let i = particles.length - 1; i >= 0; i--) {
+        particles[i].update();
+        particles[i].draw(fxCtx);
+        if(particles[i].life <= 0) particles.splice(i, 1);
+    }
+    fxCtx.globalAlpha = 1;
+}
+
+/**
+ * АНИМАЦИЯ ЛИСЫ
+ */
+const foxCanvas = document.getElementById('fox-canvas');
+const foxCtx = foxCanvas.getContext('2d');
+const foxContainer = document.getElementById('fox-container');
+
+let foxState = {
+    mode: 'wait', // wait, run, sit
+    x: window.innerWidth + 100,
+    startTime: Date.now(),
+    frame: 0,
+    lastFrameTime: 0,
+    scale: Math.max(window.innerWidth / 100, 3) * 1.5
+};
+
+// Настройка канваса лисы
+foxCanvas.width = 10; // ширина матрицы
+foxCanvas.height = 8; // высота матрицы
+foxCtx.imageSmoothingEnabled = false;
+
+function drawFoxMatrix(matrix) {
+    foxCtx.clearRect(0, 0, foxCanvas.width, foxCanvas.height);
+    const pal = PALETTES.fox;
+    for (let y = 0; y < matrix.length; y++) {
+        for (let x = 0; x < matrix[y].length; x++) {
+            const char = matrix[y][x];
+            if (pal[char]) {
+                foxCtx.fillStyle = pal[char];
+                foxCtx.fillRect(x, y, 1, 1);
+            }
+        }
+    }
+}
+
+function updateFox() {
+    const now = Date.now();
+    const elapsed = (now - foxState.startTime) / 1000;
+    
+    // Ждем 5 секунд перед стартом
+    if (foxState.mode === 'wait') {
+        if (elapsed > 5) {
+            foxState.mode = 'run';
+            foxState.x = window.innerWidth + 50;
+        } else {
+            return; // Не рисуем
+        }
+    }
+
+    // Применяем масштаб и позицию
+    foxCanvas.style.width = `${foxCanvas.width * foxState.scale}px`;
+    foxCanvas.style.height = `${foxCanvas.height * foxState.scale}px`;
+    foxCanvas.style.left = `${foxState.x}px`;
+
+    if (foxState.mode === 'run') {
+        // Движение влево
+        foxState.x -= 4; 
+        
+        // Анимация кадров бега (каждые 100мс)
+        if (now - foxState.lastFrameTime > 100) {
+            foxState.frame = (foxState.frame + 1) % 2;
+            foxState.lastFrameTime = now;
+        }
+        drawFoxMatrix(foxState.frame === 0 ? FOX_RUN_1 : FOX_RUN_2);
+
+        // Остановка примерно на 30% экрана
+        if (foxState.x < window.innerWidth * 0.25) {
+            foxState.mode = 'sit';
+            foxState.frame = 0;
+            
+            // Показываем консоль в момент остановки/пробега
+            document.getElementById('console').classList.add('visible');
+        }
+    } else if (foxState.mode === 'sit') {
+        // Анимация махания лапкой (каждые 300мс)
+        if (now - foxState.lastFrameTime > 300) {
+            foxState.frame = (foxState.frame + 1) % 2;
+            foxState.lastFrameTime = now;
+        }
+        drawFoxMatrix(foxState.frame === 0 ? FOX_SIT_WAVE_1 : FOX_SIT_WAVE_2);
+    }
+}
+
+/**
+ * ГЛАВНЫЙ ЦИКЛ
+ */
+function loop() {
+    drawBg();
+    updateFx();
+    updateFox();
+    requestAnimationFrame(loop);
+}
+
+// Обработка ресайза
+window.addEventListener('resize', () => {
+    initBg();
+    initFx();
+    initSprites();
+    foxState.scale = Math.max(window.innerWidth / 100, 3) * 1.5;
+});
+
+// Запуск
+initBg();
+initFx();
+initSprites();
+loop();
+
 </script>
 </body>
 </html>
