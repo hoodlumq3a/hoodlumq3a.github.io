@@ -52,10 +52,8 @@
   #bouquetCv{z-index:11}
   #catRCv{margin-left:-2vw;margin-bottom:1.5vh;z-index:12}
 
-  /* лиса поднята, целиком выше подписи */
   #foxCv{position:absolute;bottom:11vh;z-index:15;pointer-events:none;visibility:hidden}
 
-  /* подпись: только прозрачный текст, мелкая, в самом низу */
   #sig{
     position:absolute;right:2vw;bottom:.8vh;z-index:14;text-align:right;
     background:transparent;pointer-events:none;
@@ -116,6 +114,8 @@ function trim(c){
     if(d[(y*c.width+x)*4+3]>10){
       if(x<minx)minx=x;if(x>maxx)maxx=x;if(y<miny)miny=y;if(y>maxy)maxy=y;}}
   if(maxx<0)return c;
+  /* страховка: если bbox подозрительно мал — не кроим */
+  if((maxx-minx)*(maxy-miny)<c.width*c.height*0.02)return c;
   const o=document.createElement('canvas');o.width=maxx-minx+1;o.height=maxy-miny+1;
   o.getContext('2d').drawImage(c,minx,miny,o.width,o.height,0,0,o.width,o.height);
   return o;
@@ -129,6 +129,7 @@ const REG=[];
 function reg(id,sprite,wF,hF){
   const el=document.getElementById(id);
   el.width=sprite.width;el.height=sprite.height;
+  el.getContext('2d').drawImage(sprite,0,0);   /* <-- ВОТ ЭТА СТРОКА ТЕРАЛАСЬ */
   const r={el,w:sprite.width,h:sprite.height,wF:wF,hF:hF};
   REG.push(r);fit(r);return r;
 }
@@ -193,7 +194,7 @@ function drawFx(dt,t){
   fxx.globalAlpha=1;
 }
 
-/* ============ ЛИСА (канвас = макс кадр, кадры по низу) ============ */
+/* ============ ЛИСА ============ */
 const foxCv=document.getElementById('foxCv'),foxCtx=foxCv.getContext('2d');
 let runFrames=[],sitFrames=[],foxReady=false,FOXW=0,FOXH=0;
 const fox={state:'wait',x:0,t0:performance.now(),fi:0,ft:0,target:0};
@@ -244,7 +245,6 @@ function stepFox(dt,now){
 function drawFox(frame,now){
   if(!frame)return;
   foxCtx.clearRect(0,0,FOXW,FOXH);
-  /* кадр прижат к низу канваса — лапы никогда не обрезаются */
   foxCtx.drawImage(frame,Math.round((FOXW-frame.width)/2),FOXH-frame.height);
   foxCv.style.left=Math.round(fox.x)+'px';
   foxCv.style.transform=fox.state==='run'?('translateY('+Math.round(Math.sin(now/45)*2)+'px)'):'';
