@@ -44,7 +44,6 @@
     text-shadow:0 0 12px rgba(255,95,165,.45),0 2px 0 rgba(20,4,18,.6);
   }
 
-  /* сцена якорится верхом к поздравлению, высота по контенту */
   #scene{
     position:absolute;top:40vh;width:100%;z-index:10;
     display:flex;justify-content:center;align-items:flex-end;
@@ -53,13 +52,14 @@
   #bouquetCv{z-index:11}
   #catRCv{margin-left:-2vw;margin-bottom:1.5vh;z-index:12}
 
-  #foxCv{position:absolute;bottom:5vh;z-index:15;pointer-events:none;visibility:hidden}
+  /* лиса поднята над подписью */
+  #foxCv{position:absolute;bottom:7vh;z-index:15;pointer-events:none;visibility:hidden}
 
-  /* подпись: прозрачная, под лисой по z */
+  /* подпись: прозрачная, мелкая, в самом низу, под лисой по z */
   #sig{
-    position:absolute;right:2vw;bottom:1vh;z-index:14;text-align:right;
+    position:absolute;right:2vw;bottom:.8vh;z-index:14;text-align:right;
     background:transparent;pointer-events:none;
-    font-family:'VT323',monospace;font-size:clamp(8px,1.5vh,13px);line-height:1.15;
+    font-family:'VT323',monospace;font-size:clamp(7px,1.3vh,12px);line-height:1.15;
     color:#54ff7e;text-shadow:0 0 4px #2bff5f,0 0 10px rgba(0,255,80,.5);
     opacity:0;transition:opacity 1.2s ease;white-space:nowrap;
   }
