@@ -5,226 +5,187 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>С Днём Рождения, Настя!</title>
     <style>
-        body {
-            background-color: #0b0b12;
-            color: #fff;
-            font-family: 'Courier New', Courier, monospace;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 30px 20px;
-            margin: 0;
-            min-height: 100vh;
-            overflow-x: hidden;
-            box-sizing: border-box;
+        body, html {
+            margin: 0; padding: 0; width: 100%; height: 100%;
+            background-color: #0d0d1a; color: #fff;
+            font-family: 'Courier New', monospace;
+            overflow: hidden; display: flex; flex-direction: column; align-items: center;
         }
-
+        .text-container {
+            text-align: center; margin-top: 40px; z-index: 10; pointer-events: none;
+        }
         h1 {
-            color: #ff2a6d;
-            text-align: center;
-            font-size: 3rem;
-            text-shadow: 0 0 10px rgba(255, 42, 109, 0.5), 3px 3px 0px #1a1a2e;
-            margin-bottom: 5px;
-            z-index: 10;
+            color: #ff2a6d; font-size: 3rem; margin: 0 0 10px 0;
+            text-shadow: 0 0 10px rgba(255,42,109,0.6), 3px 3px 0 #000;
         }
-
         .subtitle {
-            color: #05d9e8;
-            font-size: 1.4rem;
-            margin-bottom: 40px;
-            text-align: center;
-            text-shadow: 0 0 8px rgba(5, 217, 232, 0.4);
-            z-index: 10;
+            color: #05d9e8; font-size: 1.4rem; text-shadow: 0 0 8px rgba(5,217,232,0.4);
         }
-
-        .pixel-art {
-            display: grid;
-            gap: 0px; 
-            margin: 20px auto;
-            background-color: rgba(20, 20, 35, 0.8);
-            padding: 15px;
-            border: 4px solid #05d9e8;
-            box-shadow: 0 0 20px rgba(5, 217, 232, 0.3), inset 0 0 15px rgba(0,0,0,0.6);
-            z-index: 10;
-        }
-
-        /* Маленький размер пикселей для высокого разрешения */
-        .pixel {
-            width: 8px;
-            height: 8px;
-            background-color: transparent;
-        }
-
-        /* Сетка 24x24 для высокой плотности картинки */
-        .high-res-grid {
-            grid-template-columns: repeat(24, 8px);
-        }
-
-        /* Цвета сердца (с объемом) */
-        .r1 { background-color: #ff0055; } /* Базовый красный */
-        .r2 { background-color: #ff6699; } /* Блик сверху */
-        .r3 { background-color: #cc0044; } /* Тень */
-        
-        /* Цвета букета */
-        .p1 { background-color: #e0115f; } .p2 { background-color: #ff66cc; } 
-        .y1 { background-color: #ffcc00; } .y2 { background-color: #ffee77; } 
-        .b1 { background-color: #00a8ff; } .b2 { background-color: #66ccff; } 
-        .or { background-color: #ff6600; } 
-        
-        /* Зелень */
-        .g1 { background-color: #39ff14; } 
-        .g2 { background-color: #00cc44; } 
-        .g3 { background-color: #00882d; } 
-
-        /* Частицы салюта */
-        .firework-particle {
-            position: fixed;
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 1;
-            box-shadow: 0 0 12px currentColor;
+        canvas {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1;
         }
     </style>
 </head>
 <body>
 
-    <h1>С ДНЁМ РОЖДЕНИЯ, НАСТЯ! 🎉</h1>
-    <div class="subtitle">Ты супер! Пусть этот день будет самым ярким! ✨</div>
-
-    <!-- ВЫСОКОЕ РАЗРЕШЕНИЕ: СЕРДЦЕ -->
-    <div class="pixel-art high-res-grid">
-        <script>
-            const heartData = [,
- ,
- ,
- ,
- ,
- ,
- ,
- ,
- ,
- ,
- ,
- ,
- ,
- ,
- ,
- ,
- ,
- ,
- ,
- ,
- ,
-                [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
-            ];
-
-            heartData.forEach(row => {
-                row.forEach(pixel => {
-                    if(pixel === 0) document.write('<div class="pixel"></div>');
-                    else if(pixel === 2) document.write('<div class="pixel r1"></div>');
-                    else if(pixel === 3) document.write('<div class="pixel r3"></div>');
-                });
-            });
-        </script>
+    <div class="text-container">
+        <h1>С ДНЁМ РОЖДЕНИЯ, НАСТЯ! 🎉</h1>
+        <div class="subtitle">Ты супер! Пусть этот день будет самым ярким! ✨</div>
     </div>
 
-    <!-- ВЫСОКОЕ РАЗРЕШЕНИЕ: БУКЕТ -->
-    <div class="pixel-art high-res-grid">
-        <script>
-            const bouquetData = [,
- ,
- ,
- ,
- ,
- ,
- ,
- ,
- ,
- ,
- ,
- ,
- ,
- ,
- ,
- ,
- ,
- ,
- ,
-                [0,0,0,0,0,10,10,0,0,0,0,10,10,0,0,0,0,0,0,0,0,0]
-            ];
+    <canvas id="birthdayCanvas"></canvas>
 
-            bouquetData.forEach(row => {
-                row.forEach(pixel => {
-                    if(pixel === 0) document.write('<div class="pixel"></div>');
-                    else if(pixel === 1) document.write('<div class="pixel p1"></div>');
-                    else if(pixel === 2) document.write('<div class="pixel p2"></div>');
-                    else if(pixel === 3) document.write('<div class="pixel y1"></div>');
-                    else if(pixel === 4) document.write('<div class="pixel y2"></div>');
-                    else if(pixel === 5) document.write('<div class="pixel b1"></div>');
-                    else if(pixel === 6) document.write('<div class="pixel b2"></div>');
-                    else if(pixel === 7) document.write('<div class="pixel or"></div>');
-                    else if(pixel === 8) document.write('<div class="pixel g1"></div>');
-                    else if(pixel === 9) document.write('<div class="pixel g2"></div>');
-                    else if(pixel === 10) document.write('<div class="pixel g3"></div>');
-                });
-            });
-        </script>
-    </div>
-
-    <!-- СКРИПТ САЛЮТА -->
     <script>
-        const palette = ['#ff0055', '#00ffcc', '#ffcc00', '#ff00ff', '#39ff14', '#00ffff', '#ff5500'];
-        
-        function launchFirework() {
-            const targetX = Math.random() * window.innerWidth;
-            const targetY = Math.random() * (window.innerHeight * 0.5) + (window.innerHeight * 0.1);
-            const color = palette[Math.floor(Math.random() * palette.length)];
-            const partCount = 45;
+        const canvas = document.getElementById('birthdayCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resize() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        // 1. НАСТРОЙКА КРАСИВОГО СЕРДЦА
+        function drawHeart(cx, cy, scale) {
+            ctx.save();
+            ctx.translate(cx, cy);
+            ctx.scale(scale, scale);
             
-            for (let i = 0; i < partCount; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('firework-particle');
-                particle.style.color = color;
-                particle.style.backgroundColor = color;
-                
-                particle.style.left = targetX + 'px';
-                particle.style.top = targetY + 'px';
-                
-                document.body.appendChild(particle);
-                
-                const angle = Math.random() * Math.PI * 2;
-                const speed = Math.random() * 6 + 3;
-                let vx = Math.cos(angle) * speed;
-                let vy = Math.sin(angle) * speed;
-                let posX = targetX;
-                let posY = targetY;
-                let opacity = 1;
-                
-                const interval = setInterval(() => {
-                    vx *= 0.97;
-                    vy += 0.18;
-                    posX += vx;
-                    posY += vy;
-                    opacity -= 0.02;
-                    
-                    particle.style.left = posX + 'px';
-                    particle.style.top = posY + 'px';
-                    particle.style.opacity = opacity;
-                    
-                    if (opacity <= 0) {
-                        clearInterval(interval);
-                        particle.remove();
+            // Сетка пикселей для детального сердца
+            const heartGrid = [,
+ ,
+ ,
+ ,
+ ,
+ ,
+ ,
+ ,
+                [0,0,0,0,0,1,0,0,0,0,0]
+            ];
+
+            const pSize = 6; 
+            const offsetX = -(11 * pSize) / 2;
+            const offsetY = -(9 * pSize) / 2;
+
+            for (let r = 0; r < heartGrid.length; r++) {
+                for (let c = 0; c < heartGrid[r].length; c++) {
+                    if (heartGrid[r][c] === 1) {
+                        // Эффект объема: верх и лево светлее, низ темнее
+                        if (r < 2 || c < 2) ctx.fillStyle = '#ff5588';
+                        else if (r > 6 || c > 8) ctx.fillStyle = '#b30033';
+                        else ctx.fillStyle = '#ff0055';
+                        
+                        ctx.fillRect(offsetX + c * pSize, offsetY + r * pSize, pSize, pSize);
                     }
-                }, 16);
+                }
+            }
+            ctx.restore();
+        }
+
+        // 2. НАСТРОЙКА БУКЕТА ЦВЕТОВ
+        function drawBouquet(cx, cy, scale) {
+            ctx.save();
+            ctx.translate(cx, cy);
+            ctx.scale(scale, scale);
+
+            const bouquetGrid = [,
+ ,
+ ,
+ ,
+ ,
+ ,
+ ,
+ ,
+ ,
+                [0,0,0,0,4,0,0,0,4,0,0,0,0,0]
+            ];
+
+            const pSize = 6;
+            const offsetX = -(14 * pSize) / 2;
+            const offsetY = -(10 * pSize) / 2;
+
+            const colors = {
+                1: '#ff00ff', // Розовый цветок
+                2: '#ffcc00', // Желтый цветок
+                3: '#00ccff', // Голубой цветок
+                4: '#00aa44', // Зеленые стебли
+                5: '#ff3366'  // Красный бант
+            };
+
+            for (let r = 0; r < bouquetGrid.length; r++) {
+                for (let c = 0; c < bouquetGrid[r].length; c++) {
+                    const colorId = bouquetGrid[r][c];
+                    if (colorId > 0) {
+                        ctx.fillStyle = colors[colorId];
+                        ctx.fillRect(offsetX + c * pSize, offsetY + r * pSize, pSize, pSize);
+                    }
+                }
+            }
+            ctx.restore();
+        }
+
+        // 3. АНИМАЦИЯ ФЕЙЕРВЕРКОВ
+        const particles = [];
+        const palette = ['#ff0055', '#00ffcc', '#ffcc00', '#ff00ff', '#39ff14', '#00ffff', '#ff5500'];
+
+        function spawnFirework() {
+            const tx = Math.random() * canvas.width;
+            const ty = Math.random() * (canvas.height * 0.4) + (canvas.height * 0.1);
+            const color = palette[Math.floor(Math.random() * palette.length)];
+            
+            for (let i = 0; i < 50; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 4 + 2;
+                particles.push({
+                    x: tx, y: ty,
+                    vx: Math.cos(angle) * speed,
+                    vy: Math.sin(angle) * speed,
+                    alpha: 1,
+                    color: color
+                });
             }
         }
-        
-        setInterval(launchFirework, 500);
-        launchFirework();
-        setTimeout(launchFirework, 250);
+
+        setInterval(spawnFirework, 600);
+
+        // ГЛАВНЫЙ ЦИКЛ ОТРЕСОВКИ
+        function animate() {
+            ctx.fillStyle = 'rgba(13, 13, 26, 0.2)'; // Эффект шлейфа у салюта
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Рисуем салют
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                p.vx *= 0.98; p.vy += 0.1; // Физика
+                p.x += p.vx; p.y += p.vy;
+                p.alpha -= 0.015;
+
+                if (p.alpha <= 0) {
+                    particles.splice(i, 1);
+                    continue;
+                }
+
+                ctx.save();
+                ctx.globalAlpha = p.alpha;
+                ctx.fillStyle = p.color;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+
+            // Рисуем Сердце и Букет по центру (Масштаб х4 для высокой плотности пикселей!)
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            
+            drawHeart(centerX, centerY - 60, 4);
+            drawBouquet(centerX, centerY + 140, 4);
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
     </script>
 </body>
 </html>
