@@ -45,12 +45,12 @@
   }
 
   #scene{
-    position:absolute;top:45vh;height:35vh;width:100%;z-index:10;
+    position:absolute;top:43vh;height:35vh;width:100%;z-index:10;
     display:flex;justify-content:center;align-items:flex-end;
   }
-  #catLCv{margin-right:-3vw;z-index:12}
+  #catLCv{margin-right:-2vw;z-index:12}
   #bouquetCv{z-index:11}
-  #catRCv{margin-left:-3vw;z-index:12}
+  #catRCv{margin-left:-2vw;z-index:12}
 
   #foxCv{position:absolute;bottom:5vh;z-index:15;pointer-events:none;visibility:hidden}
 
@@ -106,7 +106,7 @@ function keyOut(img){
   }
   x.putImageData(id,0,0);return c;
 }
-function trim(c){ /* обрезка пустых полей по альфе */
+function trim(c){
   let id;try{id=c.getContext('2d').getImageData(0,0,c.width,c.height);}catch(e){return c;}
   const d=id.data;let minx=c.width,miny=c.height,maxx=-1,maxy=-1;
   for(let y=0;y<c.height;y++)for(let x=0;x<c.width;x++){
@@ -242,7 +242,7 @@ function drawFox(frame,now){
   foxCv.style.transform=fox.state==='run'?('translateY('+Math.round(Math.sin(now/45)*2)+'px)'):'';
 }
 
-/* ============ СТАТИКА (9:16 пропорции) ============ */
+/* ============ СТАТИКА (9:16) ============ */
 Promise.all([load('heart'),load('catL'),load('catR'),load('bouquet'),load('fox')]).then(a=>{
   if(missing.length){
     const m=document.getElementById('miss');
@@ -251,9 +251,9 @@ Promise.all([load('heart'),load('catL'),load('catR'),load('bouquet'),load('fox')
   }
   const[heart,catL,catR,bouquet,foxSheet]=a;
   if(heart)reg('heartCv',trim(keyOut(heart)),.62,.16);
-  if(catL)reg('catLCv',trim(keyOut(catL)),.30,.26);
-  if(catR)reg('catRCv',trim(keyOut(catR)),.30,.26);
-  if(bouquet)reg('bouquetCv',trim(keyOut(bouquet)),.56,.34);
+  if(catL)reg('catLCv',trim(keyOut(catL)),.27,.25);
+  if(catR)reg('catRCv',trim(keyOut(catR)),.27,.25);
+  if(bouquet)reg('bouquetCv',trim(keyOut(bouquet)),.54,.33);
   if(foxSheet)buildFox(foxSheet);
   resize();
 });
