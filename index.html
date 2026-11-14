@@ -3,7 +3,7 @@
   СТО-QZ-IP-01 | Dom0: Quarantine Zone | Интеллектуальная собственность проекта
   Объект: index.html — публичная поздравительная страница «Ночной расклад для Галины»
   Автор и правообладатель: Чуков И.В. (Hoodlum)
-  Релиз: 2.3.0 | Дата: 2026-11-14 | Статус: PROD
+  Релиз: 3.0.0 | Дата: 2026-11-14 | Статус: PROD
   Копирайт СТО-QZ-IP-01 сохранению подлежит; удаление запрещено.
 -->
 <html lang="ru">
@@ -46,20 +46,22 @@ img{display:block}
 #stage{position:fixed;inset:0;z-index:0;overflow:hidden;background:radial-gradient(120% 90% at 28% 12%,#241a52 0%,#150c33 42%,#0a0616 78%,#05030c 100%)}
 #bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 50%;filter:saturate(1.06) contrast(1.03)}
 #fx{position:absolute;inset:0;width:100%;height:100%}
-#scrim{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(10,6,22,.42) 0%,rgba(10,6,22,.12) 26%,rgba(10,6,22,.42) 66%,rgba(10,6,22,.78) 100%),radial-gradient(115% 85% at 50% 45%,transparent 42%,rgba(5,3,12,.62) 100%)}
+#scrim{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(10,6,22,.34) 0%,rgba(10,6,22,.08) 26%,rgba(10,6,22,.34) 66%,rgba(10,6,22,.7) 100%),radial-gradient(115% 85% at 50% 45%,transparent 44%,rgba(5,3,12,.55) 100%)}
 #dark{position:absolute;inset:0;z-index:5;pointer-events:none;background:#05030c;opacity:1}
-.actor{position:absolute;left:0;top:0;pointer-events:none;will-change:transform;transform-origin:50% 100%;filter:drop-shadow(0 16px 22px rgba(0,0,0,.6));transition:filter .3s}
+.actor{position:absolute;left:0;top:0;pointer-events:none;will-change:transform;transform-origin:50% 100%;filter:drop-shadow(0 14px 18px rgba(0,0,0,.6));transition:filter .3s}
 #raven,#fox{pointer-events:auto;cursor:pointer}
-#raven:hover,#fox:hover{filter:drop-shadow(0 16px 22px rgba(0,0,0,.6)) drop-shadow(0 0 22px rgba(246,217,138,.6))}
-#raven:focus-visible,#fox:focus-visible{outline:2px solid var(--goldlt);outline-offset:8px;border-radius:8px}
+#raven:hover,#fox:hover{filter:drop-shadow(0 14px 18px rgba(0,0,0,.6)) drop-shadow(0 0 20px rgba(246,217,138,.6))}
+#raven:focus-visible,#fox:focus-visible{outline:2px solid var(--goldlt);outline-offset:6px;border-radius:6px}
 #moonBtn{position:absolute;z-index:4;border:0;padding:0;background:transparent;border-radius:50%;cursor:pointer;box-shadow:0 0 0 0 rgba(246,217,138,0);transition:box-shadow .4s}
 #moonBtn.invite{animation:moonPulse 3.4s ease-in-out infinite}
-#moonBtn:hover{box-shadow:0 0 44px 10px rgba(246,217,138,.22)}
-@keyframes moonPulse{0%,100%{box-shadow:0 0 0 0 rgba(246,217,138,0)}50%{box-shadow:0 0 40px 8px rgba(246,217,138,.2)}}
-#skip{position:absolute;right:16px;bottom:24px;z-index:7;display:none}
+#moonBtn:hover{box-shadow:0 0 40px 8px rgba(246,217,138,.22)}
+@keyframes moonPulse{0%,100%{box-shadow:0 0 0 0 rgba(246,217,138,0)}50%{box-shadow:0 0 36px 7px rgba(246,217,138,.2)}}
+#skip{position:absolute;right:14px;bottom:16px;z-index:8;display:none}
 body.prologue #skip{display:block}
-#hint{position:fixed;z-index:45;pointer-events:none;font-family:var(--hand);font-size:clamp(16px,1.5vw,23px);color:var(--moon);background:rgba(10,6,22,.86);border:1px solid rgba(212,175,55,.55);border-radius:3px;padding:4px 14px 7px;white-space:nowrap;opacity:0;transform:translateY(6px);transition:opacity .9s,transform .9s;text-shadow:0 0 12px rgba(232,230,255,.65);box-shadow:0 8px 26px rgba(0,0,0,.6),0 0 22px rgba(123,79,214,.25)}
+#hint{position:absolute;z-index:9;pointer-events:none;font-family:var(--hand);font-size:clamp(14px,1.4vw,22px);color:var(--moon);background:rgba(10,6,22,.86);border:1px solid rgba(212,175,55,.55);border-radius:3px;padding:3px 12px 6px;white-space:nowrap;opacity:0;transform:translateY(6px);transition:opacity .9s,transform .9s;text-shadow:0 0 12px rgba(232,230,255,.65);box-shadow:0 8px 24px rgba(0,0,0,.6)}
 #hint.show{opacity:1;transform:none}
+#toast{position:absolute;z-index:9;pointer-events:none;font-family:var(--hand);font-size:clamp(15px,1.6vw,24px);line-height:1.3;color:var(--moon);background:linear-gradient(180deg,rgba(35,22,78,.96),rgba(10,6,22,.97));border:1px solid rgba(212,175,55,.6);border-radius:3px;padding:7px 18px 10px;max-width:min(88%,440px);text-align:center;opacity:0;transform:translateY(-8px);transition:opacity .6s,transform .6s;box-shadow:0 12px 36px rgba(0,0,0,.6),0 0 26px rgba(123,79,214,.3)}
+#toast.show{opacity:1;transform:none}
 #ui{position:relative;z-index:10;min-height:100vh;display:flex;flex-direction:column;align-items:center;gap:clamp(13px,2.1vh,24px);padding:clamp(12px,2.2vh,24px) 16px clamp(22px,4vh,46px);pointer-events:none}
 #head{width:var(--col);display:flex;flex-direction:column;align-items:center;gap:9px;pointer-events:none}
 #tools{align-self:flex-end;display:flex;gap:7px;pointer-events:auto;flex-wrap:wrap;justify-content:flex-end}
@@ -86,12 +88,11 @@ h1{font-family:var(--disp);font-weight:800;font-size:clamp(21px,min(4.6vw,4.2vh)
 .card.settled .front{transform:none}
 .cap{position:absolute;left:5%;right:5%;bottom:3.5%;text-align:center;font-family:var(--disp);font-weight:700;font-size:clamp(9px,.95vw,14px);letter-spacing:.13em;color:var(--goldlt);background:linear-gradient(transparent,rgba(8,4,20,.94) 38%);padding:6px 2px 5px;text-shadow:0 0 8px rgba(212,175,55,.8),0 1px 2px #000}
 .cap b{color:var(--moon);font-weight:600}
-.panel{width:var(--col);pointer-events:auto;position:relative;background:linear-gradient(180deg,rgba(14,8,32,.88),rgba(8,5,20,.92));border:1px solid rgba(212,175,55,.38);border-radius:4px;padding:clamp(15px,2.1vw,28px) clamp(17px,2.4vw,34px);backdrop-filter:blur(9px) saturate(1.15);-webkit-backdrop-filter:blur(9px) saturate(1.15);box-shadow:0 22px 60px rgba(0,0,0,.55),inset 0 1px 0 rgba(246,217,138,.14)}
+.panel{width:var(--col);pointer-events:auto;position:relative;background:linear-gradient(180deg,rgba(14,8,32,.9),rgba(8,5,20,.93));border:1px solid rgba(212,175,55,.38);border-radius:4px;padding:clamp(15px,2.1vw,28px) clamp(17px,2.4vw,34px);backdrop-filter:blur(9px) saturate(1.15);-webkit-backdrop-filter:blur(9px) saturate(1.15);box-shadow:0 22px 60px rgba(0,0,0,.55),inset 0 1px 0 rgba(246,217,138,.14)}
 .panel::before,.panel::after{content:"";position:absolute;width:9px;height:9px;border:1px solid var(--gold);transform:rotate(45deg);opacity:.75}
 .panel::before{left:-5px;top:-5px;background:var(--night)}
 .panel::after{right:-5px;bottom:-5px;background:var(--night)}
 #read,#letter{transition:opacity 1.2s ease,transform 1.2s ease}
-body.prologue #read,body.prologue #letter{opacity:0;transform:translateY(20px);pointer-events:none}
 #letter{transition-delay:.45s}
 #read{text-align:center}
 #read.fade{opacity:0;transform:translateY(5px)}
@@ -110,8 +111,6 @@ body.prologue #read,body.prologue #letter{opacity:0;transform:translateY(20px);p
 #sig{text-align:right;font-family:var(--hand);font-size:clamp(17px,1.6vw,25px);line-height:1.2;color:var(--goldlt);text-shadow:0 0 14px rgba(212,175,55,.5)}
 #sig span{display:block;font-size:.72em;letter-spacing:.06em;color:var(--mist);text-shadow:0 0 10px rgba(179,176,214,.45)}
 #note{width:var(--col);pointer-events:auto;display:none;font-size:13px;color:var(--warn);border:1px dashed rgba(255,176,46,.5);border-radius:3px;padding:8px 12px;background:rgba(10,6,22,.8)}
-#toast{position:fixed;left:50%;top:120px;z-index:60;transform:translateX(-50%) translateY(-10px);opacity:0;transition:opacity .6s ease,transform .6s ease;pointer-events:none;font-family:var(--hand);font-size:clamp(17px,1.8vw,26px);line-height:1.3;color:var(--moon);background:linear-gradient(180deg,rgba(35,22,78,.96),rgba(10,6,22,.97));border:1px solid rgba(212,175,55,.6);border-radius:3px;padding:9px 22px 12px;max-width:min(90vw,460px);text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.6),0 0 30px rgba(123,79,214,.35)}
-#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 #breath{position:fixed;inset:0;z-index:70;display:none;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:radial-gradient(70% 60% at 50% 50%,rgba(26,15,60,.93),rgba(5,3,12,.97));backdrop-filter:blur(4px)}
 #breath.on{display:flex}
 #btitle{font-family:var(--hand);font-size:clamp(23px,3vw,38px);color:var(--moon)}
@@ -130,15 +129,23 @@ body.prologue #read,body.prologue #letter{opacity:0;transform:translateY(20px);p
 .big:disabled{opacity:.45;cursor:progress;transform:none}
 #vnote{font-size:clamp(11px,1.1vw,14px);color:var(--mist);letter-spacing:.07em}
 :focus-visible{outline:2px solid var(--goldlt);outline-offset:4px}
+@media (min-width:900px){
+body.prologue #read,body.prologue #letter{opacity:0;transform:translateY(20px);pointer-events:none}
+}
 @media (max-width:899px){
-:root{--col:min(680px,93vw)}
-#stage{height:44vh;bottom:auto}
-#ui{padding-top:calc(44vh + 14px)}
-#raven{width:27vw}
-#fox{width:33vw}
-#hint{font-size:16px}
-#skip{bottom:auto;top:12px;right:12px}
-#letter p.body{line-height:1.72}
+:root{--col:min(680px,94vw)}
+#stage{position:relative;inset:auto;width:100%;aspect-ratio:16/9;z-index:0;border-bottom:1px solid rgba(212,175,55,.3);box-shadow:0 18px 50px rgba(0,0,0,.55)}
+#ui{min-height:0;padding:16px 14px 40px;gap:16px;pointer-events:auto;background:linear-gradient(180deg,#0d0722 0%,#0a0616 60%,#05030c 100%)}
+#head{gap:12px}
+#tools{align-self:center;justify-content:center}
+h1{font-size:clamp(20px,6.4vw,32px)}
+#cards{margin-top:2px}
+.card{max-width:none}
+#hint{font-size:13px;padding:2px 9px 4px}
+#toast{font-size:15px;max-width:82%}
+#skip{right:10px;bottom:10px}
+#letter p.body{line-height:1.7}
+.panel{padding:16px 16px}
 }
 @media (max-height:620px) and (min-width:900px){
 h1{font-size:clamp(17px,3vh,26px)}
@@ -157,9 +164,11 @@ h1{font-size:clamp(17px,3vh,26px)}
 <img id="fox" class="actor" alt="" aria-hidden="true">
 <div id="dark"></div>
 <button id="moonBtn" class="invite" type="button" aria-label="Луна: загадать желание"></button>
+<div id="hint">нажми на луну →</div>
+<div id="toast" role="status" aria-live="polite"></div>
 <button id="skip" class="tool" type="button">ПРОПУСТИТЬ ▸</button>
 </div>
-<div id="ui">
+<main id="ui">
 <div id="head">
 <div id="tools">
 <button id="sndBtn" class="tool" type="button" aria-pressed="true">♪ ЗВУК</button>
@@ -183,9 +192,7 @@ h1{font-size:clamp(17px,3vh,26px)}
 <div id="sig">Исключительно для Галины<span>crafted by Hoodlum</span></div>
 </section>
 <div id="note"></div>
-</div>
-<div id="hint">нажми на луну →</div>
-<div id="toast" role="status" aria-live="polite"></div>
+</main>
 <div id="breath" role="dialog" aria-modal="true" aria-label="Дыхательная практика">
 <div id="btitle">Дыши со мной</div>
 <div id="bring"><div id="bphase">Вдох</div></div>
@@ -225,14 +232,14 @@ const DATA=[
 {n:'XVII',t:'ЗВЕЗДА',w:'Вдохновение и верный путь. Пусть надежда ведёт тебя даже в самой густой темноте — и пусть рядом всегда будет тот, кто подаст руку.'},
 {n:'XIX',t:'СОЛНЦЕ',w:'Радость без повода. Пусть каждый день находится причина улыбнуться, а тепло возвращается к тебе вдвойне.'},
 {n:'III',t:'ИМПЕРАТРИЦА',w:'Изобилие и красота. Пусть расцветает всё, к чему ты прикасаешься, и дом твой будет полной чашей.'}];
-const stage=$('#stage'),bgEl=$('#bg'),fx=$('#fx'),fxx=fx.getContext('2d'),ravEl=$('#raven'),foxEl=$('#fox'),darkEl=$('#dark'),moonBtn=$('#moonBtn'),hintEl=$('#hint'),skipBtn=$('#skip'),cardsEl=$('#cards'),readEl=$('#read'),rnum=$('#rnum'),rname=$('#rname'),rtext=$('#rtext'),dots=[...document.querySelectorAll('.dot')],finEl=$('#finale'),toastEl=$('#toast'),veil=$('#veil'),startBtn=$('#startBtn'),barin=$('#barin'),noteEl=$('#note'),breathEl=$('#breath'),bring=$('#bring'),bphase=$('#bphase'),bcount=$('#bcount'),sndBtn=$('#sndBtn'),h1El=document.querySelector('h1'),toolsEl=$('#tools');
+const stage=$('#stage'),bgEl=$('#bg'),fx=$('#fx'),fxx=fx.getContext('2d'),ravEl=$('#raven'),foxEl=$('#fox'),darkEl=$('#dark'),moonBtn=$('#moonBtn'),hintEl=$('#hint'),toastEl=$('#toast'),skipBtn=$('#skip'),cardsEl=$('#cards'),readEl=$('#read'),rnum=$('#rnum'),rname=$('#rname'),rtext=$('#rtext'),dots=[...document.querySelectorAll('.dot')],finEl=$('#finale'),veil=$('#veil'),startBtn=$('#startBtn'),barin=$('#barin'),noteEl=$('#note'),breathEl=$('#breath'),bring=$('#bring'),bphase=$('#bphase'),bcount=$('#bcount'),sndBtn=$('#sndBtn'),h1El=document.querySelector('h1'),toolsEl=$('#tools');
 let W=0,H=0,DPR=1,IW=2400,IH=1350,bgOK=false;
 const MOON={u:.2875,v:.131,r:.0554};
 const CAND=[{u:.104,v:.456},{u:.155,v:.406},{u:.195,v:.465}];
 const BOWL={u:.305,v:.60};
 const S={started:false,prologue:false,t:0,step:-1,opened:[false,false,false],count:0,finale:false,moonUsed:false,flare:0,hint:false,dark:1,lit:[0,0,0]};
-const R={st:'wait',x:0,y:0,ax:0,ay:0,sc:1,p:0,f:4,fi:0,ft:0,wt:0,caw:0,ct:9,lt:0,pet:0};
-const F={st:'wait',x:0,y:0,ax:0,ay:0,sc:1,p:0,f:6,ft:0,pt:0,dt:0,mt:5,mode:6,pet:0};
+const R={st:'wait',x:0,y:0,sx:0,sy:0,ax:0,ay:0,sc:1,p:0,f:4,fi:0,ft:0,wt:0,caw:0,ct:9,lt:0,pet:0};
+const F={st:'wait',x:0,y:0,sx:0,sy:0,ax:0,ay:0,sc:1,p:0,f:6,ft:0,pt:0,dt:0,mt:5,mode:6,pet:0};
 const A={ctx:null,master:null,on:true,white:null,brown:null,ct:2};
 let flies=[],smoke=[],meteors=[],sparks=[],stars=[];
 let toastT=0,readT=0,hintT=0,settleT=[0,0,0],dealT=[],ignT=[],finT=0;
@@ -267,32 +274,38 @@ startBtn.disabled=false;startBtn.focus();
 }
 function mapPt(u,v){const s=Math.max(W/IW,H/IH),dw=IW*s,dh=IH*s;return{x:(W-dw)/2+u*dw,y:(H-dh)/2+v*dh,s:s,dw:dw};}
 function placeHint(m,r){
-const hw=hintEl.offsetWidth||170,hh=hintEl.offsetHeight||36,a=h1El.getBoundingClientRect(),b=toolsEl.getBoundingClientRect();
-const hit=(x,y)=>{const l=x-8,t=y-8,rr=x+hw+8,bb=y+hh+8;return !((rr<a.left||l>a.right||bb<a.top||t>a.bottom)||(rr<b.left||l>b.right||bb<b.top||t>b.bottom));};
-const fits=(x,y)=>x>=8&&y>=8&&x+hw<=W-8&&y+hh<=H-8&&!hit(x,y);
-const cands=[[m.x-r-hw-18,m.y-hh/2,'→'],[m.x-r-hw-18,Math.max(m.y-hh/2,a.bottom+14),'→'],[m.x-r,m.y+r+16,'↑'],[m.x-hw/2,m.y+r+16,'↑'],[14,14,'↗']];
+const hw=hintEl.offsetWidth||150,hh=hintEl.offsetHeight||30,a=h1El.getBoundingClientRect(),b=toolsEl.getBoundingClientRect(),sr=stage.getBoundingClientRect();
+const hl=a.left-sr.left,ht=a.top-sr.top,hr=a.right-sr.left,hb=a.bottom-sr.top,tl=b.left-sr.left,tt=b.top-sr.top,tr=b.right-sr.left,tb=b.bottom-sr.top;
+const hit=(x,y)=>{const l=x-6,t=y-6,rr=x+hw+6,bb=y+hh+6;return !((rr<hl||l>hr||bb<ht||t>hb)||(rr<tl||l>tr||bb<tt||t>tb));};
+const fits=(x,y)=>x>=6&&y>=6&&x+hw<=W-6&&y+hh<=H-6&&!hit(x,y);
+const cands=[[m.x-r-hw-14,m.y-hh/2,'→'],[m.x-r-hw-14,Math.max(m.y-hh/2,ht+hb+10),'→'],[m.x-r,m.y+r+12,'↑'],[m.x-hw/2,m.y+r+12,'↑'],[8,8,'↗']];
 let pick=null;
 for(const c of cands)if(fits(c[0],c[1])){pick=c;break;}
-if(!pick){const c=cands[2];pick=[clamp(c[0],8,Math.max(8,W-hw-8)),clamp(c[1],8,Math.max(8,H-hh-8)),c[2]];}
+if(!pick){const c=cands[2];pick=[clamp(c[0],6,Math.max(6,W-hw-6)),clamp(c[1],6,Math.max(6,H-hh-6)),c[2]];}
 hintEl.textContent='нажми на луну '+pick[2];hintEl.style.left=Math.round(pick[0])+'px';hintEl.style.top=Math.round(pick[1])+'px';
 }
 function placeToast(m,r){
-const tw=Math.min(W*.9,460);
-toastEl.style.left=clamp(m.x,tw/2+10,Math.max(tw/2+10,W-tw/2-10))+'px';
-toastEl.style.top=clamp(m.y+r+58,10,Math.max(10,H-110))+'px';
+const tw=Math.min(W*.88,440);
+toastEl.style.left=clamp(m.x,tw/2+8,Math.max(tw/2+8,W-tw/2-8))+'px';
+toastEl.style.top=clamp(m.y+r+46,8,Math.max(8,H-96))+'px';
+toastEl.style.transform='translateX(-50%)';
+}
+function computeAnchors(){
+const rs=mapPt(-.15,.08),rp=mapPt(.10,.78),fs=mapPt(1.15,.52),fp=mapPt(.88,.80);
+R.sx=rs.x-ravEl.offsetWidth/2;R.sy=rs.y-ravEl.offsetHeight;R.ax=rp.x-ravEl.offsetWidth/2;R.ay=rp.y-ravEl.offsetHeight;
+F.sx=fs.x-foxEl.offsetWidth/2;F.sy=fs.y-foxEl.offsetHeight;F.ax=fp.x-foxEl.offsetWidth/2;F.ay=fp.y-foxEl.offsetHeight;
 }
 function resize(){
 W=stage.clientWidth;H=stage.clientHeight;DPR=Math.min(2,devicePixelRatio||1);
 fx.width=Math.round(W*DPR);fx.height=Math.round(H*DPR);fxx.setTransform(DPR,0,0,DPR,0,0);
+ravEl.style.height=Math.round(H*(MOB()?.30:.25))+'px';ravEl.style.width='auto';
+foxEl.style.height=Math.round(H*(MOB()?.34:.29))+'px';foxEl.style.width='auto';
 const m=mapPt(MOON.u,MOON.v),r=MOON.r*m.dw;
 moonBtn.style.left=(m.x-r)+'px';moonBtn.style.top=(m.y-r)+'px';moonBtn.style.width=(r*2)+'px';moonBtn.style.height=(r*2)+'px';
-placeHint(m,r);placeToast(m,r);
-const mob=MOB();
-R.ax=W*(mob?.03:.025);R.ay=H-H*(mob?.02:.12)-ravEl.offsetHeight;
-F.ax=W-W*(mob?.03:.025)-foxEl.offsetWidth;F.ay=H-H*(mob?.01:.12)-foxEl.offsetHeight;
+computeAnchors();placeHint(m,r);placeToast(m,r);
 if(R.st==='idle'||R.st==='land'){R.x=R.ax;R.y=R.ay;}
 if(F.st==='sit'){F.x=F.ax;F.y=F.ay;}
-flies=[];for(let i=0;i<(mob?16:26);i++)flies.push({x:Math.random()*W,y:H*(.25+Math.random()*.6),p:Math.random()*TAU,v:.25+Math.random()*.55});
+flies=[];for(let i=0;i<(MOB()?14:26);i++)flies.push({x:Math.random()*W,y:H*(.25+Math.random()*.6),p:Math.random()*TAU,v:.25+Math.random()*.55});
 stars=[];if(!bgOK)for(let i=0;i<150;i++)stars.push({x:Math.random()*W,y:Math.random()*H*.6,r:Math.random()<.15?2:1,p:Math.random()*TAU});
 smoke=[];apply();
 }
@@ -343,8 +356,8 @@ meteors=[];sparks=[];smoke=[];
 finEl.classList.remove('show');toastEl.classList.remove('show');hintEl.classList.remove('show');moonBtn.classList.add('invite');
 cards.forEach((b,i)=>{b.classList.remove('open','settled');b.setAttribute('aria-pressed','false');b.setAttribute('aria-label','Карта '+DATA[i].n+' '+DATA[i].t+'. Открыть');dots[i].classList.remove('on');});
 setRead('НОЧНОЙ РАСКЛАД','Три карты света','Прикоснись к картам — по одной. Каждая останется открытой, а её слова никуда не исчезнут: их можно перечитать в любой момент.');
-R.st='wait';R.p=0;R.sc=.6;R.f=4;R.fi=0;R.ft=0;R.wt=0;R.caw=0;R.ct=9;R.pet=0;R.lt=0;R.x=-ravEl.offsetWidth*1.5;R.y=H*.05;
-F.st='wait';F.p=0;F.sc=.72;F.f=6;F.ft=0;F.pt=0;F.dt=0;F.mode=6;F.mt=5;F.pet=0;F.x=W+foxEl.offsetWidth*1.2;F.y=H*.5;
+R.st='wait';R.p=0;R.sc=.6;R.f=4;R.fi=0;R.ft=0;R.wt=0;R.caw=0;R.ct=9;R.pet=0;R.lt=0;R.x=R.sx;R.y=R.sy;
+F.st='wait';F.p=0;F.sc=.72;F.f=6;F.ft=0;F.pt=0;F.dt=0;F.mode=6;F.mt=5;F.pet=0;F.x=F.sx;F.y=F.sy;
 cardsEl.classList.remove('in');
 setFrame(ravEl,4);setFrame(foxEl,6);apply();
 }
@@ -378,7 +391,7 @@ else if(n==='wing')nh(t,.22,300,.7,.035,'lowpass',1.8);
 else if(n==='flip'){nh(t,.26,700,1.2,.09,'bandpass',4);bell(t+.06,880,.7,.055);bell(t+.1,1320,.5,.03);}
 else if(n==='caw'){for(let i=0;i<2;i++){const tt=t+i*.27,o=A.ctx.createOscillator(),b=A.ctx.createBiquadFilter(),g=A.ctx.createGain();o.type='sawtooth';o.frequency.setValueAtTime(540,tt);o.frequency.exponentialRampToValueAtTime(230,tt+.19);b.type='bandpass';b.frequency.setValueAtTime(950,tt);b.Q.value=3.2;g.gain.setValueAtTime(.0001,tt);g.gain.linearRampToValueAtTime(.1,tt+.03);g.gain.exponentialRampToValueAtTime(.0001,tt+.22);o.connect(b);b.connect(g);g.connect(A.master);o.start(tt);o.stop(tt+.25);nh(tt,.18,1400,1.5,.035);}}
 else if(n==='paw')nh(t,.13,190,.8,.1,'lowpass');
-else if(n==='fox'){for(let i=0;i<3;i++){const tt=t+i*.17,o=A.ctx.createOscillator(),b=A.ctx.createBiquadFilter(),g=A.ctx.createGain();o.type='triangle';o.frequency.setValueAtTime(520+i*60,tt);o.frequency.exponentialRampToValueAtTime(880+i*70,tt+.05);o.frequency.exponentialRampToValueAtTime(430,tt+.15);b.type='bandpass';b.frequency.setValueAtTime(1150,tt);b.Q.value=1.5;g.gain.setValueAtTime(.0001,tt);g.gain.linearRampToValueAtTime(.085,tt+.02);g.gain.exponentialRampToValueAtTime(.0001,tt+.17);o.connect(b);b.connect(g);g.connect(A.master);o.start(tt);o.stop(tt+.2);nh(tt,.1,1900,1.2,.018);}const w=A.ctx.createOscillator(),v=A.ctx.createOscillator(),vg=A.ctx.createGain(),wg=A.ctx.createGain();w.type='sine';w.frequency.setValueAtTime(650,t+.56);w.frequency.linearRampToValueAtTime(930,t+.76);w.frequency.linearRampToValueAtTime(560,t+1.15);v.frequency.value=7;vg.gain.value=16;v.connect(vg);vg.connect(w.frequency);wg.gain.setValueAtTime(.0001,t+.56);wg.gain.linearRampToValueAtTime(.055,t+.7);wg.gain.exponentialRampToValueAtTime(.0001,t+1.2);w.connect(wg);wg.connect(A.master);w.start(t+.56);w.stop(t+1.25);v.start(t+.56);v.stop(t+1.25);bell(t+.62,1046.5,.9,.022);}
+else if(n==='fox'){for(let i=0;i<3;i++){const tt=t+i*.17,o=A.ctx.createOscillator(),b=A.ctx.createBiquadFilter(),g=A.ctx.createGain();o.type='triangle';o.frequency.setValueAtTime(520+i*60,tt);o.frequency.exponentialRampToValueAtTime(880+i*70,tt+.05);o.frequency.exponentialRampToValueAtTime(430,tt+.15);b.type='bandpass';b.frequency.setValueAtTime(1150,tt);b.Q.value=1.5;g.gain.setValueAtTime(.0001,tt);g.gain.linearRampToValueAtTime(.085,tt+.02);g.gain.exponentialRampToValueAtTime(.0001,tt+.17);o.connect(b);b.connect(g);g.connect(A.master);o.start(tt);o.stop(tt+.2);nh(tt,.1,1900,1.2,.018);}const w=A.ctx.createOscillator(),v=A.ctx.createOscillator(),vg=A.ctx.createGain(),wg=A.ctx.createGain();w.type='sine';w.frequency.setValueAtTime(650,t+.56);w.frequency.linearRampToValueAtTime(930,t+.76);w.frequency.linearRampToValueAtTime(560,t+1.15);v.frequency.value=7;vg.gain.value=16;v.connect(vg);vg.connect(w.frequency);wg.gain.setValueAtTime(.0001,t+.56);wg.gain.linearRampToValueAtTime(.055,t+.7);wg.gain.exponentialRampToValueAtTime(.0001,t+1.2);w.connect(wg);wg.connect(A.master);w.start(t+.56);v.start(t+.56);w.stop(t+1.25);v.stop(t+1.25);bell(t+.62,1046.5,.9,.022);}
 else if(n==='raven'){for(let i=0;i<3;i++){const tt=t+i*.3,o=A.ctx.createOscillator(),b=A.ctx.createBiquadFilter(),g=A.ctx.createGain();o.type='sawtooth';o.frequency.setValueAtTime(560-i*30,tt);o.frequency.exponentialRampToValueAtTime(220,tt+.22);b.type='bandpass';b.frequency.setValueAtTime(1000-i*80,tt);b.Q.value=2.8;g.gain.setValueAtTime(.0001,tt);g.gain.linearRampToValueAtTime(.1,tt+.03);g.gain.exponentialRampToValueAtTime(.0001,tt+.27);o.connect(b);b.connect(g);g.connect(A.master);o.start(tt);o.stop(tt+.3);nh(tt,.2,1500,1.4,.03);}nh(t+.95,.35,420,.7,.045,'lowpass',2.2);bell(t+1,392,1.1,.028,'triangle');}
 else if(n==='wish')[523.25,587.33,698.46,783.99,1046.5].forEach((f,i)=>bell(t+i*.1,f,1.3,.05));
 else if(n==='finale'){[261.63,329.63,392,523.25,659.25].forEach((f,i)=>bell(t+i*.07,f,2.6,.045,'triangle'));nh(t+.1,1.4,2400,.7,.025,'bandpass',.3);}
@@ -400,7 +413,6 @@ bring.style.transform='scale('+s.toFixed(3)+')';
 }
 function update(dt){
 S.t+=dt;S.flare=Math.max(0,S.flare-dt);R.pet=Math.max(0,R.pet-dt);F.pet=Math.max(0,F.pet-dt);
-const rw=ravEl.offsetWidth,fw=foxEl.offsetWidth,fh=foxEl.offsetHeight;
 if(S.prologue){
 S.dark=clamp(1-S.t/1.6,0,1);
 for(let i=0;i<3;i++)S.lit[i]=clamp((S.t-(.2+i*.52))/.6,0,1);
@@ -408,12 +420,12 @@ while(S.step+1<STEPS.length&&S.t>=STEPS[S.step+1].t){S.step++;STEPS[S.step].f();
 }
 if(R.st==='fly'){
 R.p=Math.min(1,R.p+dt/3.4);
-R.x=lerp(-rw*1.5,R.ax,easeOut(R.p));
-R.y=lerp(H*.05,R.ay,easeIO(R.p))-Math.sin(Math.PI*R.p)*H*.05;
+R.x=lerp(R.sx,R.ax,easeOut(R.p));
+R.y=lerp(R.sy,R.ay,easeIO(R.p))-Math.sin(Math.PI*R.p)*H*.05;
 R.sc=lerp(.6,1,easeIO(R.p));
 R.ft+=dt;if(R.ft>.1){R.ft=0;R.fi=(R.fi+1)%4;R.f=[0,1,2,1][R.fi];}
 R.wt+=dt;if(R.wt>.42){R.wt=0;sfx('wing');}
-if(R.p>=1){R.st='land';R.lt=.4;R.f=3;R.sc=1;sfx('caw');puff(R.ax+rw/2,R.ay+ravEl.offsetHeight,10);}
+if(R.p>=1){R.st='land';R.lt=.4;R.f=3;R.sc=1;sfx('caw');puff(R.ax+ravEl.offsetWidth/2,R.ay+ravEl.offsetHeight,10);}
 }else if(R.st==='land'){R.lt-=dt;R.x=R.ax;R.y=R.ay;if(R.lt<=0){R.st='idle';R.f=4;R.caw=.5;}}
 else if(R.st==='idle'){
 R.x=R.ax;R.y=R.ay+Math.sin(S.t*1.5)*2-(R.pet>0?Math.abs(Math.sin(R.pet*9))*10:0);
@@ -422,11 +434,11 @@ R.caw=Math.max(0,R.caw-dt);R.f=(R.caw>0||R.pet>0)?5:4;
 }
 if(F.st==='run'){
 F.p=Math.min(1,F.p+dt/3.4);const e=easeOut(F.p);
-F.x=lerp(W+fw*1.2,F.ax,e);F.y=lerp(H*.5,F.ay,easeIO(F.p));F.sc=lerp(.72,1,easeIO(F.p));
+F.x=lerp(F.sx,F.ax,e);F.y=lerp(F.sy,F.ay,easeIO(F.p));F.sc=lerp(.72,1,easeIO(F.p));
 F.ft+=dt;if(F.ft>.09){F.ft=0;F.f=(F.f+1)%4;}
 F.pt+=dt;if(F.pt>.24){F.pt=0;sfx('paw');}
-F.dt+=dt;if(F.dt>.07){F.dt=0;puff(F.x+fw*.6,F.y+fh*F.sc,2);}
-if(F.p>=1){F.st='sit';F.f=6;F.mode=6;F.mt=4;F.sc=1;sfx('paw');puff(F.ax+fw/2,F.ay+fh,14);burstAt(foxEl,14);}
+F.dt+=dt;if(F.dt>.07){F.dt=0;puff(F.x+foxEl.offsetWidth*.6,F.y+foxEl.offsetHeight*F.sc,2);}
+if(F.p>=1){F.st='sit';F.f=6;F.mode=6;F.mt=4;F.sc=1;sfx('paw');puff(F.ax+foxEl.offsetWidth/2,F.ay+foxEl.offsetHeight,14);burstAt(foxEl,14);}
 }else if(F.st==='sit'){
 F.x=F.ax;F.y=F.ay+Math.sin(S.t*1.2)*1.2-(F.pet>0?Math.abs(Math.sin(F.pet*10))*12:0);
 F.mt-=dt;if(F.mt<=0){F.mode=F.mode===6?(Math.random()<.55?7:4):6;F.mt=F.mode===6?4+Math.random()*4:1.6;}
